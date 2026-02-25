@@ -1,28 +1,24 @@
 <?php
-if (file_exists("storage/rates-data.php")) {
-    include "storage/rates-data.php";
-} else {
-    $gold_18 = $gold_22 = $gold_24 = $silver = "";
-    $last_updated = "";
-}
+$last_updated = date('Y-m-d H:i:s');
 
+require "db/db.php";
 if (isset($_POST['save'])) {
 
-  $gold_18 = $_POST['gold_18'];
-  $gold_22 = $_POST['gold_22'];
-  $gold_24 = $_POST['gold_24'];
-  $silver = $_POST['silver'];
-  $last_updated = date("d-m-Y h:i A");
 
-  $content = "<?php
-\$gold_18 = $gold_18;
-\$gold_22 = $gold_22;
-\$gold_24 = $gold_24;
-\$silver  = $silver;
-\$last_updated = \"$last_updated\";
-?>";
+$stmt = $pdo->prepare(
+  "UPDATE rates
+   SET gold_18 = ?, gold_22 = ?, gold_24 = ?, silver = ?, updated_at = NOW()
+   WHERE id = 1"
+);
 
-$result = file_put_contents("storage/rates-data.php", $content);
+
+$stmt->execute([
+  (int)$_POST["gold_18"],
+  (int)$_POST["gold_22"],
+  (int)$_POST["gold_24"],
+  (int)$_POST["silver"]
+]);
+   
 
   header("Location: rate.php");
   exit;

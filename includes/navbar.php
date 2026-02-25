@@ -1,6 +1,10 @@
 <?php include $_SERVER['DOCUMENT_ROOT'] . '/config/config.php'; ?>
-<?php $currentPage = basename($_SERVER['PHP_SELF']); ?> <?php include
-"storage/rates-data.php"; ?>
+<?php $currentPage = basename($_SERVER['PHP_SELF']);
+if ($currentPage === 'index.php') {include "db/db.php";}else {include "../db/db.php";} $stmt = $pdo->query("SELECT *
+FROM rates WHERE id = 1");
+ $rates = $stmt->fetch(PDO::FETCH_ASSOC);
+
+?>
 <body>
   <nav
     id="navbar"
@@ -31,7 +35,7 @@
                 src="<?= BASE_URL ?>/assets/images/goldcoin.png"
                 class="h-5 w-5"
               />
-              GOLD 22 KT/1g - <?=$gold_22 ?>
+              GOLD 22 KT/1g - <?=$rates["gold_22"] ?>
             </div>
             <svg
               class="h-4 w-4 ml-1"
@@ -64,7 +68,7 @@
                 <span class="flex-1 font-medium text-red-700"
                   >GOLD 24 KT/1g</span
                 >
-                <span class="font-semibold text-red-700">₹ <?=$gold_24 ?></span>
+                <span class="font-semibold text-red-700">₹ <?=$rates["gold_24"] ?></span>
               </li>
 
               <li
@@ -77,7 +81,7 @@
                 <span class="flex-1 font-medium text-red-700"
                   >GOLD 22 KT/1g</span
                 >
-                <span class="font-semibold text-red-700">₹ <?=$gold_22 ?></span>
+                <span class="font-semibold text-red-700">₹ <?=$rates["gold_22"] ?></span>
               </li>
 
               <li
@@ -90,7 +94,7 @@
                 <span class="flex-1 font-medium text-red-700"
                   >GOLD 18 KT/1g</span
                 >
-                <span class="font-semibold text-red-700">₹ <?=$gold_18 ?></span>
+                <span class="font-semibold text-red-700">₹ <?=$rates["gold_18"] ?></span>
               </li>
 
               <li
@@ -101,7 +105,7 @@
                   class="h-5 w-5"
                 />
                 <span class="flex-1 font-medium text-gray-700">SILVER 1g</span>
-                <span class="font-semibold">₹ <?=$silver ?></span>
+                <span class="font-semibold">₹ <?=$rates["silver"] ?></span>
               </li>
             </ul>
           </div>
