@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <?php include $_SERVER['DOCUMENT_ROOT'] . '/config/config.php'; ?>
+=======
+<?php include $_SERVER['DOCUMENT_ROOT'] . '/sridhanalakshmijewellers/config/config.php'; ?>
+>>>>>>> 4ef2ef1f95523d4a3ab982792100d8731e8dabc4
 <?php $currentPage = basename($_SERVER['PHP_SELF']); ?>
 
 <body>
