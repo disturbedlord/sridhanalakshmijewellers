@@ -1,6 +1,6 @@
 <?php include $_SERVER['DOCUMENT_ROOT'] . '/config/config.php'; ?>
-<?php $currentPage = basename($_SERVER['PHP_SELF']); ?>
-
+<?php $currentPage = basename($_SERVER['PHP_SELF']); ?> <?php include
+"storage/rates-data.php"; ?>
 <body>
   <nav
     id="navbar"
@@ -31,7 +31,7 @@
                 src="<?= BASE_URL ?>/assets/images/goldcoin.png"
                 class="h-5 w-5"
               />
-              GOLD 22 KT/1g - ₹ 14830
+              GOLD 22 KT/1g - <?=$gold_22 ?>
             </div>
             <svg
               class="h-4 w-4 ml-1"
@@ -64,7 +64,7 @@
                 <span class="flex-1 font-medium text-red-700"
                   >GOLD 24 KT/1g</span
                 >
-                <span class="font-semibold text-red-700">₹ 16190</span>
+                <span class="font-semibold text-red-700">₹ <?=$gold_24 ?></span>
               </li>
 
               <li
@@ -77,7 +77,7 @@
                 <span class="flex-1 font-medium text-red-700"
                   >GOLD 22 KT/1g</span
                 >
-                <span class="font-semibold text-red-700">₹ 14830</span>
+                <span class="font-semibold text-red-700">₹ <?=$gold_22 ?></span>
               </li>
 
               <li
@@ -90,33 +90,7 @@
                 <span class="flex-1 font-medium text-red-700"
                   >GOLD 18 KT/1g</span
                 >
-                <span class="font-semibold text-red-700">₹ 12142</span>
-              </li>
-
-              <li
-                class="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 cursor-pointer"
-              >
-                <img
-                  src="<?= BASE_URL ?>/assets/images/goldcoin.png"
-                  class="h-5 w-5"
-                />
-                <span class="flex-1 font-medium text-red-700"
-                  >GOLD 14 KT/1g</span
-                >
-                <span class="font-semibold text-red-700">₹ 9444</span>
-              </li>
-
-              <li
-                class="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 cursor-pointer"
-              >
-                <img
-                  src="<?= BASE_URL ?>/assets/images/silvercoin.png"
-                  class="h-5 w-5"
-                />
-                <span class="flex-1 font-medium text-gray-700"
-                  >PLATINUM 1g</span
-                >
-                <span class="font-semibold">₹ 7631</span>
+                <span class="font-semibold text-red-700">₹ <?=$gold_18 ?></span>
               </li>
 
               <li
@@ -127,7 +101,7 @@
                   class="h-5 w-5"
                 />
                 <span class="flex-1 font-medium text-gray-700">SILVER 1g</span>
-                <span class="font-semibold">₹ 290</span>
+                <span class="font-semibold">₹ <?=$silver ?></span>
               </li>
             </ul>
           </div>

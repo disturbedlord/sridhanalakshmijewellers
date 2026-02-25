@@ -1,5 +1,10 @@
 <?php
-include "rates-data.php";
+if (file_exists("storage/rates-data.php")) {
+    include "storage/rates-data.php";
+} else {
+    $gold_18 = $gold_22 = $gold_24 = $silver = "";
+    $last_updated = "";
+}
 
 if (isset($_POST['save'])) {
 
@@ -17,7 +22,7 @@ if (isset($_POST['save'])) {
 \$last_updated = \"$last_updated\";
 ?>";
 
-  file_put_contents("rates-data.php", $content);
+$result = file_put_contents("storage/rates-data.php", $content);
 
   header("Location: rate.php");
   exit;
