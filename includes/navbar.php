@@ -1,4 +1,4 @@
-<?php include $_SERVER['DOCUMENT_ROOT'] . '/elan/sridhanalakshmijewellers/config/config.php'; ?>
+<?php include $_SERVER['DOCUMENT_ROOT'] . '/config/config.php'; ?>
 <?php $currentPage = basename($_SERVER['PHP_SELF']); ?>
 
 <body>

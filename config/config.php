@@ -1,2 +1,2 @@
 <?php
-define('BASE_URL', '/sridhanalakshmijewellers');
+define('BASE_URL', '');
