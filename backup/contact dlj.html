@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Contact Us - DHANALAKSHMI Jewellery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Contact Us</h1>
+      <p>DHANALAKSHMI Jewellery</p>
+      <script>
+        function chkname() {
+          cust_name = document.qry.cust_name.value;
+          email = document.qry.email.value;
+          if (cust_name == "") {
+            alert("Enter Customer Name");
+            document.qry.cust_name.focus();
+            return false;
+          }
+          if (email == "") {
+            alert("Enter Customer Email");
+            document.qry.email.focus();
+          }
+        }
+      </script>
+    </header>
+
+    <div class="mx-auto w-11/12 max-w-lg bg-white mt-6 p-5 rounded-lg shadow">
+      <h2 class="text-2xl font-semibold mb-3">Get in Touch</h2>
+      <form name="qry" method="post" class="space-y-3">
+        <input
+          class="w-full p-3 border rounded"
+          type="text"
+          name="cust_name"
+          id="cust_name"
+          placeholder="Your Name"
+          required
+        />
+        <input
+          class="w-full p-3 border rounded"
+          type="text"
+          name="email"
+          id="email"
+          placeholder="Your Email"
+          required
+        />
+        <textarea
+          class="w-full p-3 border rounded h-28 resize-none"
+          placeholder="Your Message"
+        ></textarea>
+        <button
+          class="w-full bg-blue-600 text-white py-3 rounded text-lg"
+          type="submit"
+          onclick="chkname()"
+        >
+          Send Message
+        </button>
+      </form>
+
+      <div class="mt-4 p-4 bg-blue-50 border-l-4 border-blue-600 rounded">
+        <p class="text-sm"><strong>Phone:</strong> 9361795050</p>
+        <p class="text-sm">
+          <strong>Email:</strong> SRIDHANALAKSHMII@zohomail.in
+        </p>
+        <p class="text-sm">
+          <strong>Address:</strong> Bazar Street, Arcot, Ranipet-632503, Tamil
+          Nadu, India
+        </p>
+      </div>
+
+      <a
+        class="block w-full text-center mt-4 bg-green-500 text-white py-3 rounded"
+        href="tel:9361795050"
+        >📞 Call Now</a
+      >
+
+      <!-- Google Map Embed for Arcot -->
+      <iframe
+        class="w-full mt-4 rounded"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3895.143511092794!2d79.3310!3d12.9050!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a528e6b144d5ad7%3A0x93b8c3d0a3d75bd3!2sBazaar%20St%2C%20Arcot%2C%20Tamil%20Nadu%20632503!5e0!3m2!1sen!2sin!4v1700000000000"
+        loading="lazy"
+        height="280"
+      ></iframe>
+    </div>
+  </body>
+</html>

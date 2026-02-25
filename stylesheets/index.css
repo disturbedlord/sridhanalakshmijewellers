@@ -1,0 +1,27 @@
+/* Minimal styles for slider and small JS-driven behaviors */
+body,
+*,
+html {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.slide {
+  display: none;
+  position: absolute;
+  inset: 0;
+}
+.slide.active {
+  display: block;
+}
+/* keep rate dropdown positioned relative to its container */
+.rate-dropdown {
+  display: none;
+}
+.rate-dropdown.show {
+  display: block;
+}
+
+.phoneavi {
+  color: red;
+}

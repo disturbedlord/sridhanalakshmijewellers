@@ -1,0 +1,32 @@
+[23-Dec-2025 07:53:48 UTC] PHP Warning:  include(rates-data.php): Failed to open stream: No such file or directory in /home4/sridhanalakshmij/public_html/rate.php on line 2
+[23-Dec-2025 07:53:48 UTC] PHP Warning:  include(): Failed opening 'rates-data.php' for inclusion (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home4/sridhanalakshmij/public_html/rate.php on line 2
+[23-Dec-2025 07:53:48 UTC] PHP Warning:  Undefined variable $gold_18 in /home4/sridhanalakshmij/public_html/rate.php on line 114
+[23-Dec-2025 07:53:48 UTC] PHP Warning:  Undefined variable $gold_22 in /home4/sridhanalakshmij/public_html/rate.php on line 119
+[23-Dec-2025 07:53:48 UTC] PHP Warning:  Undefined variable $gold_24 in /home4/sridhanalakshmij/public_html/rate.php on line 124
+[23-Dec-2025 07:53:48 UTC] PHP Warning:  Undefined variable $silver in /home4/sridhanalakshmij/public_html/rate.php on line 129
+[23-Dec-2025 07:53:48 UTC] PHP Warning:  Undefined variable $last_updated in /home4/sridhanalakshmij/public_html/rate.php on line 136
+[23-Dec-2025 07:56:58 UTC] PHP Warning:  include(rates-data.php): Failed to open stream: No such file or directory in /home4/sridhanalakshmij/public_html/rate.php on line 2
+[23-Dec-2025 07:56:58 UTC] PHP Warning:  include(): Failed opening 'rates-data.php' for inclusion (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home4/sridhanalakshmij/public_html/rate.php on line 2
+[23-Dec-2025 07:56:58 UTC] PHP Warning:  Undefined variable $gold_18 in /home4/sridhanalakshmij/public_html/rate.php on line 114
+[23-Dec-2025 07:56:58 UTC] PHP Warning:  Undefined variable $gold_22 in /home4/sridhanalakshmij/public_html/rate.php on line 119
+[23-Dec-2025 07:56:58 UTC] PHP Warning:  Undefined variable $gold_24 in /home4/sridhanalakshmij/public_html/rate.php on line 124
+[23-Dec-2025 07:56:58 UTC] PHP Warning:  Undefined variable $silver in /home4/sridhanalakshmij/public_html/rate.php on line 129
+[23-Dec-2025 07:56:58 UTC] PHP Warning:  Undefined variable $last_updated in /home4/sridhanalakshmij/public_html/rate.php on line 136
+[23-Dec-2025 07:57:15 UTC] PHP Warning:  include(rates-data.php): Failed to open stream: No such file or directory in /home4/sridhanalakshmij/public_html/rate.php on line 2
+[23-Dec-2025 07:57:15 UTC] PHP Warning:  include(): Failed opening 'rates-data.php' for inclusion (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home4/sridhanalakshmij/public_html/rate.php on line 2
+[23-Dec-2025 07:57:15 UTC] PHP Warning:  Undefined variable $gold_18 in /home4/sridhanalakshmij/public_html/rate.php on line 114
+[23-Dec-2025 07:57:15 UTC] PHP Warning:  Undefined variable $gold_22 in /home4/sridhanalakshmij/public_html/rate.php on line 119
+[23-Dec-2025 07:57:15 UTC] PHP Warning:  Undefined variable $gold_24 in /home4/sridhanalakshmij/public_html/rate.php on line 124
+[23-Dec-2025 07:57:15 UTC] PHP Warning:  Undefined variable $silver in /home4/sridhanalakshmij/public_html/rate.php on line 129
+[23-Dec-2025 07:57:15 UTC] PHP Warning:  Undefined variable $last_updated in /home4/sridhanalakshmij/public_html/rate.php on line 136
+[23-Dec-2025 07:57:17 UTC] PHP Warning:  include(rates-data.php): Failed to open stream: No such file or directory in /home4/sridhanalakshmij/public_html/rate.php on line 2
+[23-Dec-2025 07:57:17 UTC] PHP Warning:  include(): Failed opening 'rates-data.php' for inclusion (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home4/sridhanalakshmij/public_html/rate.php on line 2
+[23-Dec-2025 07:57:17 UTC] PHP Warning:  Undefined variable $gold_18 in /home4/sridhanalakshmij/public_html/rate.php on line 114
+[23-Dec-2025 07:57:17 UTC] PHP Warning:  Undefined variable $gold_22 in /home4/sridhanalakshmij/public_html/rate.php on line 119
+[23-Dec-2025 07:57:17 UTC] PHP Warning:  Undefined variable $gold_24 in /home4/sridhanalakshmij/public_html/rate.php on line 124
+[23-Dec-2025 07:57:17 UTC] PHP Warning:  Undefined variable $silver in /home4/sridhanalakshmij/public_html/rate.php on line 129
+[23-Dec-2025 07:57:17 UTC] PHP Warning:  Undefined variable $last_updated in /home4/sridhanalakshmij/public_html/rate.php on line 136
+[23-Dec-2025 07:58:53 UTC] PHP Warning:  include(rates-data.php): Failed to open stream: No such file or directory in /home4/sridhanalakshmij/public_html/rate.php on line 2
+[23-Dec-2025 07:58:53 UTC] PHP Warning:  include(): Failed opening 'rates-data.php' for inclusion (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home4/sridhanalakshmij/public_html/rate.php on line 2
+[23-Dec-2025 17:54:23 UTC] PHP Warning:  Undefined variable $last_updated in /home4/sridhanalakshmij/public_html/rate.php on line 137
+[23-Dec-2025 17:54:26 UTC] PHP Warning:  Undefined variable $last_updated in /home4/sridhanalakshmij/public_html/rate.php on line 137
