@@ -1,4 +1,3 @@
-<?php include "rates-data.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
   <?php include "includes/head.php"; ?>
