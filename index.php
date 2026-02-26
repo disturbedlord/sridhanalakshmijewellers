@@ -460,18 +460,7 @@
 
     <script>
       
-      const btn = document.getElementById("rateBtn");
-      const menu = document.getElementById("rateMenu");
-
-      btn.addEventListener("click", () => {
-        menu.classList.toggle("hidden");
-      });
-
-      document.addEventListener("click", (e) => {
-        if (!btn.contains(e.target) && !menu.contains(e.target)) {
-          menu.classList.add("hidden");
-        }
-      });
+      
 
       // Slider
       let slideIndex = 0;
