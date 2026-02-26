@@ -2,13 +2,53 @@
 <?php $currentPage = basename($_SERVER['PHP_SELF']);
 if ($currentPage === 'index.php') {include "db/db.php";}else {include "../db/db.php";} $stmt = $pdo->query("SELECT *
 FROM rates WHERE id = 1");
- $rates = $stmt->fetch(PDO::FETCH_ASSOC);
+ $ratesData = $stmt->fetch(PDO::FETCH_ASSOC);
 
 ?>
+  <?php
+// Example rates array from backend
+$rates = [
+    ["name" => "GOLD 24 KT/1g", "price" => $ratesData["gold_24"], "icon" => "/assets/images/goldcoin.png"],
+    ["name" => "GOLD 22 KT/1g", "price" => $ratesData["gold_22"], "icon" => "/assets/images/goldcoin.png"],
+    ["name" => "GOLD 18 KT/1g", "price" => $ratesData["gold_18"], "icon" => "/assets/images/goldcoin.png"],
+    ["name" => "SILVER 1g", "price" => $ratesData["silver"], "icon" => "/assets/images/silvercoin.png"],
+];
+$currentRate = $rates[1]; // default selected (GOLD 22 KT)
+?>
 <body>
+
+
+<!-- Container -->
+<div class="sm:hidden block bg-[#FEF7F7] w-full pl-2 relative inline-block text-left mx-auto">
+    <!-- Button -->
+    <button id="rateDropdownButton" type="button" class="inline-flex justify-between items-center px-4 py-1 bg-[#FEF7F7]  text-gray-800 font-semibold rounded-md hover:bg-gray-50 focus:outline-none" aria-expanded="true">
+        <div class="flex items-center space-x-2 text-[#681016] bg-[#FEF7F7] ">
+            <img src="<?= $currentRate['icon'] ?>" class="h-5 w-5" alt="Metal Icon">
+            <span><?= $currentRate['name'] ?> - ₹<?= number_format($currentRate['price']) ?></span>
+        </div>
+        <svg id="rateDropdownIcon" class="ml-2 h-4 w-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+    </button>
+
+    <!-- Dropdown menu -->
+    <div id="rateDropdownMenu" class="z-50 hidden absolute mt-2  bg-white border shadow-lg rounded-md z-50">
+        <ul class="divide-y divide-gray-100 ">
+            <?php foreach ($rates as $rate): ?>
+            <li>
+                <a href="#" class="flex items-center px-4 py-2 hover:bg-gray-100 ">
+                    <img src="<?= $rate['icon'] ?>" class="h-5 w-5 mr-2" alt="Icon">
+                    <span class=" text-[#681016]"><?= $rate['name'] ?> - ₹<?= number_format($rate['price']) ?></span>
+                </a>
+            </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+</div>
+
   <nav
     id="navbar"
-    class="bg-white px-4 sm:px-4 py-3 sm:py-2 flex items-center justify-between border-b sticky top-0 z-50"
+    class="bg-white px-4 sm:px-4 py-3 sm:py-2 flex items-center justify-between border-b sticky top-0 z-10"
   >
     <div id="brand" class="flex items-center gap-3">
       <img
@@ -35,7 +75,7 @@ FROM rates WHERE id = 1");
                 src="<?= BASE_URL ?>/assets/images/goldcoin.png"
                 class="h-5 w-5"
               />
-              GOLD 22 KT/1g - <?=$rates["gold_22"] ?>
+              GOLD 22 KT/1g - <?= $ratesData["gold_22"]?>
             </div>
             <svg
               class="h-4 w-4 ml-1"
@@ -58,55 +98,21 @@ FROM rates WHERE id = 1");
             class="absolute right-0 z-50 mt-2 w-72 origin-top-right rounded-md bg-white shadow-lg border hidden"
           >
             <ul class="py-2 text-sm text-gray-700">
+              <?php foreach ($rates as $rate): ?>
               <li
                 class="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 cursor-pointer"
               >
                 <img
-                  src="<?= BASE_URL ?>/assets/images/goldcoin.png"
+                  src="<?=  $rate['icon']?>"
                   class="h-5 w-5"
                 />
                 <span class="flex-1 font-medium text-red-700"
-                  >GOLD 24 KT/1g</span
+                  ><?=$rate['name'] ?></span
                 >
-                <span class="font-semibold text-red-700">₹ <?=$rates["gold_24"] ?></span>
+                <span class="font-semibold text-red-700">₹ <?=$rate['price'] ?></span>
               </li>
-
-              <li
-                class="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 cursor-pointer"
-              >
-                <img
-                  src="<?= BASE_URL ?>/assets/images/goldcoin.png"
-                  class="h-5 w-5"
-                />
-                <span class="flex-1 font-medium text-red-700"
-                  >GOLD 22 KT/1g</span
-                >
-                <span class="font-semibold text-red-700">₹ <?=$rates["gold_22"] ?></span>
-              </li>
-
-              <li
-                class="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 cursor-pointer"
-              >
-                <img
-                  src="<?= BASE_URL ?>/assets/images/goldcoin.png"
-                  class="h-5 w-5"
-                />
-                <span class="flex-1 font-medium text-red-700"
-                  >GOLD 18 KT/1g</span
-                >
-                <span class="font-semibold text-red-700">₹ <?=$rates["gold_18"] ?></span>
-              </li>
-
-              <li
-                class="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 cursor-pointer"
-              >
-                <img
-                  src="<?= BASE_URL ?>/assets/images/silvercoin.png"
-                  class="h-5 w-5"
-                />
-                <span class="flex-1 font-medium text-gray-700">SILVER 1g</span>
-                <span class="font-semibold">₹ <?=$rates["silver"] ?></span>
-              </li>
+              <?php endforeach; ?>
+              
             </ul>
           </div>
         </div>
@@ -211,4 +217,20 @@ FROM rates WHERE id = 1");
       hamburger.classList.add("opacity-0");
     }
   });
+  const button = document.getElementById('rateDropdownButton');
+const menu1 = document.getElementById('rateDropdownMenu');
+const icon = document.getElementById('rateDropdownIcon');
+
+button.addEventListener('click', () => {
+    menu1.classList.toggle('hidden');
+    icon.classList.toggle('rotate-180');
+});
+
+// Optional: close dropdown if clicked outside
+document.addEventListener('click', (e) => {
+    if (!button.contains(e.target) && !menu1.contains(e.target)) {
+        menu1.classList.add('hidden');
+        icon.classList.remove('rotate-180');
+    }
+});
 </script>
