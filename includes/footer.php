@@ -103,9 +103,23 @@
     Rights Reserved.
   </div>
   <a
-    href="https://api.whatsapp.com/send?phone=919361795050"
+    href="#"
+    onclick="openWhatsApp()"
     class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:scale-110 transition"
   >
     💬
   </a>
 </footer>
+
+<script>
+  function openWhatsApp() {
+    const phone = "919361795050";
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    if (isMobile) {
+      window.location.href = "https://wa.me/" + phone;
+    } else {
+      window.open("https://web.whatsapp.com/send?phone=" + phone, "_blank");
+    }
+  }
+</script>
