@@ -1,19 +1,34 @@
 <?php include $_SERVER['DOCUMENT_ROOT'] . '/config/config.php'; ?>
 <?php $currentPage = basename($_SERVER['PHP_SELF']);
-if ($currentPage === 'index.php') {include "db/db.php";}else {include "../db/db.php";} $stmt = $pdo->query("SELECT *
-FROM rates WHERE id = 1");
- $ratesData = $stmt->fetch(PDO::FETCH_ASSOC);
+if ($currentPage === 'index.php') 
+{include "db/db.php";}
+else {include "../db/db.php";} 
+
+
+
+$sql = "SELECT * FROM RATES";
+$result = $conn->query($sql);
+$ratesData;
+if ($result->num_rows > 0) {
+
+    while ($row = $result->fetch_assoc()) {
+        $ratesData = $row;
+    }
+
+} else {
+    echo "No records found";
+}
+$conn->close();
 
 ?>
   <?php
 // Example rates array from backend
 $rates = [
-    ["name" => "GOLD 24 KT/1g", "price" => $ratesData["gold_24"], "icon" => "/assets/images/goldcoin.png"],
-    ["name" => "GOLD 22 KT/1g", "price" => $ratesData["gold_22"], "icon" => "/assets/images/goldcoin.png"],
-    ["name" => "GOLD 18 KT/1g", "price" => $ratesData["gold_18"], "icon" => "/assets/images/goldcoin.png"],
+    ["name" => "GOLD 24 KT/1g", "price" => $ratesData["gold_24k"], "icon" => "/assets/images/goldcoin.png"],
+    ["name" => "GOLD 22 KT/1g", "price" => $ratesData["gold_22k"], "icon" => "/assets/images/goldcoin.png"],
+    ["name" => "GOLD 18 KT/1g", "price" => $ratesData["gold_18k"], "icon" => "/assets/images/goldcoin.png"],
     ["name" => "SILVER 1g", "price" => $ratesData["silver"], "icon" => "/assets/images/silvercoin.png"],
 ];
-$currentRate = $rates[1]; // default selected (GOLD 22 KT)
 ?>
 <body>
 
@@ -23,8 +38,8 @@ $currentRate = $rates[1]; // default selected (GOLD 22 KT)
     <!-- Button -->
     <button id="rateDropdownButton" type="button" class="inline-flex justify-between items-center px-4 py-1 bg-[#FEF7F7]  text-gray-800 font-semibold rounded-md hover:bg-gray-50 focus:outline-none" aria-expanded="true">
         <div class="flex items-center space-x-2 text-[#681016] bg-[#FEF7F7] ">
-            <img src="<?= $currentRate['icon'] ?>" class="h-5 w-5" alt="Metal Icon">
-            <span><?= $currentRate['name'] ?> - ₹<?= number_format($currentRate['price']) ?></span>
+            <img src="<?= $rates[0]['icon'] ?>" class="h-5 w-5" alt="Metal Icon">
+            <span><?= $rates[0]["name"] ?> - ₹<?= number_format($rates[0]['price']) ?></span>
         </div>
         <svg id="rateDropdownIcon" class="ml-2 h-4 w-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -75,7 +90,7 @@ $currentRate = $rates[1]; // default selected (GOLD 22 KT)
                 src="<?= BASE_URL ?>/assets/images/goldcoin.png"
                 class="h-5 w-5"
               />
-              GOLD 22 KT/1g - <?= $ratesData["gold_22"]?>
+              <?= $rates[0]["name"] ?> - <?= $rates[0]["price"]?>
             </div>
             <svg
               class="h-4 w-4 ml-1"

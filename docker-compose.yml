@@ -1,23 +1,28 @@
-version: "3.9"
+version: "3.8"
 
 services:
+
   web:
     build: .
+    container_name: php-app
     ports:
-      - "8081:80"
-    environment:
-      DATABASE_URL: postgres://postgres:postgres@db:5432/ratesdb
+      - "8080:80"
     depends_on:
       - db
 
   db:
-    image: postgres:15
+    image: mysql:8
+    container_name: mysql-db
+    restart: always
     environment:
-      POSTGRES_DB: ratesdb
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    ports:
+      - "3306:3306"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - mysql_data:/var/lib/mysql
 
 volumes:
-  pgdata:
+  mysql_data:
