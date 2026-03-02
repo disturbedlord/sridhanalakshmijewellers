@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Pressable,
   ScrollView,
+  Linking,
 } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import {
@@ -39,13 +40,20 @@ export default function App() {
 }
 
 function HomeScreen() {
+  const openWhatsApp = () => {
+    const phone = "919361795050"; // country code + number
+    const url = `https://wa.me/${phone}`;
+
+    Linking.openURL(url);
+  };
+
   return (
     <View className="flex-1">
       <ScrollView className="flex-1 bg-gray-100">
         <Home />
       </ScrollView>
       <Pressable
-        onPress={() => console.log("FAB pressed")}
+        onPress={openWhatsApp}
         className="absolute bottom-6 right-6 bg-green-500 w-16 h-16 rounded-full items-center justify-center shadow-lg z-50"
       >
         <FontAwesome name="whatsapp" size={24} color="white" />
