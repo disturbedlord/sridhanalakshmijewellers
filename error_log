@@ -1,0 +1,168 @@
+[23-Dec-2025 07:53:48 UTC] PHP Warning:  include(rates-data.php): Failed to open stream: No such file or directory in /home4/sridhanalakshmij/public_html/rate.php on line 2
+[23-Dec-2025 07:53:48 UTC] PHP Warning:  include(): Failed opening 'rates-data.php' for inclusion (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home4/sridhanalakshmij/public_html/rate.php on line 2
+[23-Dec-2025 07:53:48 UTC] PHP Warning:  Undefined variable $gold_18 in /home4/sridhanalakshmij/public_html/rate.php on line 114
+[23-Dec-2025 07:53:48 UTC] PHP Warning:  Undefined variable $gold_22 in /home4/sridhanalakshmij/public_html/rate.php on line 119
+[23-Dec-2025 07:53:48 UTC] PHP Warning:  Undefined variable $gold_24 in /home4/sridhanalakshmij/public_html/rate.php on line 124
+[23-Dec-2025 07:53:48 UTC] PHP Warning:  Undefined variable $silver in /home4/sridhanalakshmij/public_html/rate.php on line 129
+[23-Dec-2025 07:53:48 UTC] PHP Warning:  Undefined variable $last_updated in /home4/sridhanalakshmij/public_html/rate.php on line 136
+[23-Dec-2025 07:56:58 UTC] PHP Warning:  include(rates-data.php): Failed to open stream: No such file or directory in /home4/sridhanalakshmij/public_html/rate.php on line 2
+[23-Dec-2025 07:56:58 UTC] PHP Warning:  include(): Failed opening 'rates-data.php' for inclusion (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home4/sridhanalakshmij/public_html/rate.php on line 2
+[23-Dec-2025 07:56:58 UTC] PHP Warning:  Undefined variable $gold_18 in /home4/sridhanalakshmij/public_html/rate.php on line 114
+[23-Dec-2025 07:56:58 UTC] PHP Warning:  Undefined variable $gold_22 in /home4/sridhanalakshmij/public_html/rate.php on line 119
+[23-Dec-2025 07:56:58 UTC] PHP Warning:  Undefined variable $gold_24 in /home4/sridhanalakshmij/public_html/rate.php on line 124
+[23-Dec-2025 07:56:58 UTC] PHP Warning:  Undefined variable $silver in /home4/sridhanalakshmij/public_html/rate.php on line 129
+[23-Dec-2025 07:56:58 UTC] PHP Warning:  Undefined variable $last_updated in /home4/sridhanalakshmij/public_html/rate.php on line 136
+[23-Dec-2025 07:57:15 UTC] PHP Warning:  include(rates-data.php): Failed to open stream: No such file or directory in /home4/sridhanalakshmij/public_html/rate.php on line 2
+[23-Dec-2025 07:57:15 UTC] PHP Warning:  include(): Failed opening 'rates-data.php' for inclusion (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home4/sridhanalakshmij/public_html/rate.php on line 2
+[23-Dec-2025 07:57:15 UTC] PHP Warning:  Undefined variable $gold_18 in /home4/sridhanalakshmij/public_html/rate.php on line 114
+[23-Dec-2025 07:57:15 UTC] PHP Warning:  Undefined variable $gold_22 in /home4/sridhanalakshmij/public_html/rate.php on line 119
+[23-Dec-2025 07:57:15 UTC] PHP Warning:  Undefined variable $gold_24 in /home4/sridhanalakshmij/public_html/rate.php on line 124
+[23-Dec-2025 07:57:15 UTC] PHP Warning:  Undefined variable $silver in /home4/sridhanalakshmij/public_html/rate.php on line 129
+[23-Dec-2025 07:57:15 UTC] PHP Warning:  Undefined variable $last_updated in /home4/sridhanalakshmij/public_html/rate.php on line 136
+[23-Dec-2025 07:57:17 UTC] PHP Warning:  include(rates-data.php): Failed to open stream: No such file or directory in /home4/sridhanalakshmij/public_html/rate.php on line 2
+[23-Dec-2025 07:57:17 UTC] PHP Warning:  include(): Failed opening 'rates-data.php' for inclusion (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home4/sridhanalakshmij/public_html/rate.php on line 2
+[23-Dec-2025 07:57:17 UTC] PHP Warning:  Undefined variable $gold_18 in /home4/sridhanalakshmij/public_html/rate.php on line 114
+[23-Dec-2025 07:57:17 UTC] PHP Warning:  Undefined variable $gold_22 in /home4/sridhanalakshmij/public_html/rate.php on line 119
+[23-Dec-2025 07:57:17 UTC] PHP Warning:  Undefined variable $gold_24 in /home4/sridhanalakshmij/public_html/rate.php on line 124
+[23-Dec-2025 07:57:17 UTC] PHP Warning:  Undefined variable $silver in /home4/sridhanalakshmij/public_html/rate.php on line 129
+[23-Dec-2025 07:57:17 UTC] PHP Warning:  Undefined variable $last_updated in /home4/sridhanalakshmij/public_html/rate.php on line 136
+[23-Dec-2025 07:58:53 UTC] PHP Warning:  include(rates-data.php): Failed to open stream: No such file or directory in /home4/sridhanalakshmij/public_html/rate.php on line 2
+[23-Dec-2025 07:58:53 UTC] PHP Warning:  include(): Failed opening 'rates-data.php' for inclusion (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home4/sridhanalakshmij/public_html/rate.php on line 2
+[23-Dec-2025 17:54:23 UTC] PHP Warning:  Undefined variable $last_updated in /home4/sridhanalakshmij/public_html/rate.php on line 137
+[23-Dec-2025 17:54:26 UTC] PHP Warning:  Undefined variable $last_updated in /home4/sridhanalakshmij/public_html/rate.php on line 137
+[27-Feb-2026 12:10:38 UTC] PHP Warning:  mysqli::__construct(): php_network_getaddresses: getaddrinfo for db failed: Name or service not known in /home4/sridhanalakshmij/public_html/db/db.php on line 3
+[27-Feb-2026 12:10:38 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: php_network_getaddresses: getaddrinfo for db failed: Name or service not known in /home4/sridhanalakshmij/public_html/db/db.php:3
+Stack trace:
+#0 /home4/sridhanalakshmij/public_html/db/db.php(3): mysqli->__construct('db', 'myuser', Object(SensitiveParameterValue), 'mydb')
+#1 /home4/sridhanalakshmij/public_html/includes/navbar.php(4): include('/home4/sridhana...')
+#2 /home4/sridhanalakshmij/public_html/index.php(9): include('/home4/sridhana...')
+#3 {main}
+  thrown in /home4/sridhanalakshmij/public_html/db/db.php on line 3
+[27-Feb-2026 12:10:40 UTC] PHP Warning:  mysqli::__construct(): php_network_getaddresses: getaddrinfo for db failed: Name or service not known in /home4/sridhanalakshmij/public_html/db/db.php on line 3
+[27-Feb-2026 12:10:40 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: php_network_getaddresses: getaddrinfo for db failed: Name or service not known in /home4/sridhanalakshmij/public_html/db/db.php:3
+Stack trace:
+#0 /home4/sridhanalakshmij/public_html/db/db.php(3): mysqli->__construct('db', 'myuser', Object(SensitiveParameterValue), 'mydb')
+#1 /home4/sridhanalakshmij/public_html/includes/navbar.php(4): include('/home4/sridhana...')
+#2 /home4/sridhanalakshmij/public_html/index.php(9): include('/home4/sridhana...')
+#3 {main}
+  thrown in /home4/sridhanalakshmij/public_html/db/db.php on line 3
+[27-Feb-2026 12:10:43 UTC] PHP Warning:  mysqli::__construct(): php_network_getaddresses: getaddrinfo for db failed: Name or service not known in /home4/sridhanalakshmij/public_html/db/db.php on line 3
+[27-Feb-2026 12:10:43 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: php_network_getaddresses: getaddrinfo for db failed: Name or service not known in /home4/sridhanalakshmij/public_html/db/db.php:3
+Stack trace:
+#0 /home4/sridhanalakshmij/public_html/db/db.php(3): mysqli->__construct('db', 'myuser', Object(SensitiveParameterValue), 'mydb')
+#1 /home4/sridhanalakshmij/public_html/includes/navbar.php(4): include('/home4/sridhana...')
+#2 /home4/sridhanalakshmij/public_html/index.php(9): include('/home4/sridhana...')
+#3 {main}
+  thrown in /home4/sridhanalakshmij/public_html/db/db.php on line 3
+[27-Feb-2026 12:10:51 UTC] PHP Warning:  mysqli::__construct(): php_network_getaddresses: getaddrinfo for db failed: Name or service not known in /home4/sridhanalakshmij/public_html/db/db.php on line 3
+[27-Feb-2026 12:10:51 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: php_network_getaddresses: getaddrinfo for db failed: Name or service not known in /home4/sridhanalakshmij/public_html/db/db.php:3
+Stack trace:
+#0 /home4/sridhanalakshmij/public_html/db/db.php(3): mysqli->__construct('db', 'myuser', Object(SensitiveParameterValue), 'mydb')
+#1 /home4/sridhanalakshmij/public_html/includes/navbar.php(4): include('/home4/sridhana...')
+#2 /home4/sridhanalakshmij/public_html/index.php(9): include('/home4/sridhana...')
+#3 {main}
+  thrown in /home4/sridhanalakshmij/public_html/db/db.php on line 3
+[27-Feb-2026 12:11:05 UTC] PHP Warning:  mysqli::__construct(): php_network_getaddresses: getaddrinfo for db failed: Name or service not known in /home4/sridhanalakshmij/public_html/db/db.php on line 3
+[27-Feb-2026 12:11:05 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: php_network_getaddresses: getaddrinfo for db failed: Name or service not known in /home4/sridhanalakshmij/public_html/db/db.php:3
+Stack trace:
+#0 /home4/sridhanalakshmij/public_html/db/db.php(3): mysqli->__construct('db', 'myuser', Object(SensitiveParameterValue), 'mydb')
+#1 /home4/sridhanalakshmij/public_html/includes/navbar.php(4): include('/home4/sridhana...')
+#2 /home4/sridhanalakshmij/public_html/index.php(9): include('/home4/sridhana...')
+#3 {main}
+  thrown in /home4/sridhanalakshmij/public_html/db/db.php on line 3
+[27-Feb-2026 12:11:48 UTC] PHP Warning:  mysqli::__construct(): php_network_getaddresses: getaddrinfo for db failed: Name or service not known in /home4/sridhanalakshmij/public_html/db/db.php on line 3
+[27-Feb-2026 12:11:48 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: php_network_getaddresses: getaddrinfo for db failed: Name or service not known in /home4/sridhanalakshmij/public_html/db/db.php:3
+Stack trace:
+#0 /home4/sridhanalakshmij/public_html/db/db.php(3): mysqli->__construct('db', 'myuser', Object(SensitiveParameterValue), 'mydb')
+#1 /home4/sridhanalakshmij/public_html/includes/navbar.php(4): include('/home4/sridhana...')
+#2 /home4/sridhanalakshmij/public_html/index.php(9): include('/home4/sridhana...')
+#3 {main}
+  thrown in /home4/sridhanalakshmij/public_html/db/db.php on line 3
+[27-Feb-2026 12:13:55 UTC] PHP Warning:  mysqli::__construct(): php_network_getaddresses: getaddrinfo for db failed: Name or service not known in /home4/sridhanalakshmij/public_html/db/db.php on line 3
+[27-Feb-2026 12:13:55 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: php_network_getaddresses: getaddrinfo for db failed: Name or service not known in /home4/sridhanalakshmij/public_html/db/db.php:3
+Stack trace:
+#0 /home4/sridhanalakshmij/public_html/db/db.php(3): mysqli->__construct('db', 'myuser', Object(SensitiveParameterValue), 'mydb')
+#1 /home4/sridhanalakshmij/public_html/includes/navbar.php(4): include('/home4/sridhana...')
+#2 /home4/sridhanalakshmij/public_html/index.php(9): include('/home4/sridhana...')
+#3 {main}
+  thrown in /home4/sridhanalakshmij/public_html/db/db.php on line 3
+[27-Feb-2026 12:14:38 UTC] PHP Warning:  mysqli::__construct(): php_network_getaddresses: getaddrinfo for db failed: Name or service not known in /home4/sridhanalakshmij/public_html/db/db.php on line 3
+[27-Feb-2026 12:14:38 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: php_network_getaddresses: getaddrinfo for db failed: Name or service not known in /home4/sridhanalakshmij/public_html/db/db.php:3
+Stack trace:
+#0 /home4/sridhanalakshmij/public_html/db/db.php(3): mysqli->__construct('db', 'myuser', Object(SensitiveParameterValue), 'mydb')
+#1 /home4/sridhanalakshmij/public_html/includes/navbar.php(4): include('/home4/sridhana...')
+#2 /home4/sridhanalakshmij/public_html/index.php(9): include('/home4/sridhana...')
+#3 {main}
+  thrown in /home4/sridhanalakshmij/public_html/db/db.php on line 3
+[27-Feb-2026 12:16:05 UTC] PHP Warning:  mysqli::__construct(): php_network_getaddresses: getaddrinfo for db failed: Name or service not known in /home4/sridhanalakshmij/public_html/db/db.php on line 3
+[27-Feb-2026 12:16:05 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: php_network_getaddresses: getaddrinfo for db failed: Name or service not known in /home4/sridhanalakshmij/public_html/db/db.php:3
+Stack trace:
+#0 /home4/sridhanalakshmij/public_html/db/db.php(3): mysqli->__construct('db', 'myuser', Object(SensitiveParameterValue), 'mydb')
+#1 /home4/sridhanalakshmij/public_html/includes/navbar.php(4): include('/home4/sridhana...')
+#2 /home4/sridhanalakshmij/public_html/index.php(13): include('/home4/sridhana...')
+#3 {main}
+  thrown in /home4/sridhanalakshmij/public_html/db/db.php on line 3
+[27-Feb-2026 12:17:17 UTC] PHP Warning:  mysqli::__construct(): php_network_getaddresses: getaddrinfo for db failed: Name or service not known in /home4/sridhanalakshmij/public_html/db/db.php on line 3
+[27-Feb-2026 12:17:17 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: php_network_getaddresses: getaddrinfo for db failed: Name or service not known in /home4/sridhanalakshmij/public_html/db/db.php:3
+Stack trace:
+#0 /home4/sridhanalakshmij/public_html/db/db.php(3): mysqli->__construct('db', 'myuser', Object(SensitiveParameterValue), 'mydb')
+#1 /home4/sridhanalakshmij/public_html/includes/navbar.php(4): include('/home4/sridhana...')
+#2 /home4/sridhanalakshmij/public_html/index.php(13): include('/home4/sridhana...')
+#3 {main}
+  thrown in /home4/sridhanalakshmij/public_html/db/db.php on line 3
+[27-Feb-2026 12:27:24 UTC] PHP Warning:  Undefined variable $gold_18 in /home4/sridhanalakshmij/public_html/rate.php on line 53
+[27-Feb-2026 12:27:24 UTC] PHP Warning:  Undefined variable $gold_22 in /home4/sridhanalakshmij/public_html/rate.php on line 58
+[27-Feb-2026 12:27:24 UTC] PHP Warning:  Undefined variable $gold_24 in /home4/sridhanalakshmij/public_html/rate.php on line 64
+[27-Feb-2026 12:27:24 UTC] PHP Warning:  Undefined variable $silver in /home4/sridhanalakshmij/public_html/rate.php on line 70
+[27-Feb-2026 12:27:47 UTC] PHP Warning:  Undefined variable $gold_18 in /home4/sridhanalakshmij/public_html/rate.php on line 53
+[27-Feb-2026 12:27:47 UTC] PHP Warning:  Undefined variable $gold_22 in /home4/sridhanalakshmij/public_html/rate.php on line 58
+[27-Feb-2026 12:27:47 UTC] PHP Warning:  Undefined variable $gold_24 in /home4/sridhanalakshmij/public_html/rate.php on line 64
+[27-Feb-2026 12:27:47 UTC] PHP Warning:  Undefined variable $silver in /home4/sridhanalakshmij/public_html/rate.php on line 70
+[27-Feb-2026 13:36:30 UTC] PHP Warning:  Undefined variable $gold_18 in /home4/sridhanalakshmij/public_html/rate.php on line 53
+[27-Feb-2026 13:36:30 UTC] PHP Warning:  Undefined variable $gold_22 in /home4/sridhanalakshmij/public_html/rate.php on line 58
+[27-Feb-2026 13:36:30 UTC] PHP Warning:  Undefined variable $gold_24 in /home4/sridhanalakshmij/public_html/rate.php on line 64
+[27-Feb-2026 13:36:30 UTC] PHP Warning:  Undefined variable $silver in /home4/sridhanalakshmij/public_html/rate.php on line 70
+[27-Feb-2026 13:37:00 UTC] PHP Warning:  Undefined variable $gold_18 in /home4/sridhanalakshmij/public_html/rate.php on line 53
+[27-Feb-2026 13:37:00 UTC] PHP Warning:  Undefined variable $gold_22 in /home4/sridhanalakshmij/public_html/rate.php on line 58
+[27-Feb-2026 13:37:00 UTC] PHP Warning:  Undefined variable $gold_24 in /home4/sridhanalakshmij/public_html/rate.php on line 64
+[27-Feb-2026 13:37:00 UTC] PHP Warning:  Undefined variable $silver in /home4/sridhanalakshmij/public_html/rate.php on line 70
+[27-Feb-2026 14:37:24 UTC] PHP Warning:  Undefined variable $gold_18 in /home4/sridhanalakshmij/public_html/rate.php on line 53
+[27-Feb-2026 14:37:24 UTC] PHP Warning:  Undefined variable $gold_22 in /home4/sridhanalakshmij/public_html/rate.php on line 58
+[27-Feb-2026 14:37:24 UTC] PHP Warning:  Undefined variable $gold_24 in /home4/sridhanalakshmij/public_html/rate.php on line 64
+[27-Feb-2026 14:37:24 UTC] PHP Warning:  Undefined variable $silver in /home4/sridhanalakshmij/public_html/rate.php on line 70
+[27-Feb-2026 15:02:20 UTC] PHP Warning:  Undefined variable $gold_18 in /home4/sridhanalakshmij/public_html/rate.php on line 53
+[27-Feb-2026 15:02:20 UTC] PHP Warning:  Undefined variable $gold_22 in /home4/sridhanalakshmij/public_html/rate.php on line 58
+[27-Feb-2026 15:02:20 UTC] PHP Warning:  Undefined variable $gold_24 in /home4/sridhanalakshmij/public_html/rate.php on line 64
+[27-Feb-2026 15:02:20 UTC] PHP Warning:  Undefined variable $silver in /home4/sridhanalakshmij/public_html/rate.php on line 70
+[27-Feb-2026 15:05:35 UTC] PHP Warning:  Undefined variable $gold_18 in /home4/sridhanalakshmij/public_html/rate.php on line 53
+[27-Feb-2026 15:05:35 UTC] PHP Warning:  Undefined variable $gold_22 in /home4/sridhanalakshmij/public_html/rate.php on line 58
+[27-Feb-2026 15:05:35 UTC] PHP Warning:  Undefined variable $gold_24 in /home4/sridhanalakshmij/public_html/rate.php on line 64
+[27-Feb-2026 15:05:35 UTC] PHP Warning:  Undefined variable $silver in /home4/sridhanalakshmij/public_html/rate.php on line 70
+[28-Feb-2026 05:33:26 UTC] PHP Warning:  Undefined variable $gold_18 in /home4/sridhanalakshmij/public_html/rate.php on line 53
+[28-Feb-2026 05:33:26 UTC] PHP Warning:  Undefined variable $gold_22 in /home4/sridhanalakshmij/public_html/rate.php on line 58
+[28-Feb-2026 05:33:26 UTC] PHP Warning:  Undefined variable $gold_24 in /home4/sridhanalakshmij/public_html/rate.php on line 64
+[28-Feb-2026 05:33:26 UTC] PHP Warning:  Undefined variable $silver in /home4/sridhanalakshmij/public_html/rate.php on line 70
+[28-Feb-2026 05:37:22 UTC] PHP Warning:  Undefined variable $gold_18 in /home4/sridhanalakshmij/public_html/rate.php on line 53
+[28-Feb-2026 05:37:22 UTC] PHP Warning:  Undefined variable $gold_22 in /home4/sridhanalakshmij/public_html/rate.php on line 58
+[28-Feb-2026 05:37:22 UTC] PHP Warning:  Undefined variable $gold_24 in /home4/sridhanalakshmij/public_html/rate.php on line 64
+[28-Feb-2026 05:37:22 UTC] PHP Warning:  Undefined variable $silver in /home4/sridhanalakshmij/public_html/rate.php on line 70
+[28-Feb-2026 09:09:23 UTC] PHP Warning:  Undefined variable $gold_18 in /home4/sridhanalakshmij/public_html/rate.php on line 53
+[28-Feb-2026 09:09:23 UTC] PHP Warning:  Undefined variable $gold_22 in /home4/sridhanalakshmij/public_html/rate.php on line 58
+[28-Feb-2026 09:09:23 UTC] PHP Warning:  Undefined variable $gold_24 in /home4/sridhanalakshmij/public_html/rate.php on line 64
+[28-Feb-2026 09:09:23 UTC] PHP Warning:  Undefined variable $silver in /home4/sridhanalakshmij/public_html/rate.php on line 70
+[28-Feb-2026 14:10:51 UTC] PHP Warning:  Undefined variable $gold_18 in /home4/sridhanalakshmij/public_html/rate.php on line 53
+[28-Feb-2026 14:10:51 UTC] PHP Warning:  Undefined variable $gold_22 in /home4/sridhanalakshmij/public_html/rate.php on line 58
+[28-Feb-2026 14:10:51 UTC] PHP Warning:  Undefined variable $gold_24 in /home4/sridhanalakshmij/public_html/rate.php on line 64
+[28-Feb-2026 14:10:51 UTC] PHP Warning:  Undefined variable $silver in /home4/sridhanalakshmij/public_html/rate.php on line 70
+[01-Mar-2026 11:43:40 UTC] PHP Warning:  Undefined variable $gold_18 in /home4/sridhanalakshmij/public_html/rate.php on line 53
+[01-Mar-2026 11:43:40 UTC] PHP Warning:  Undefined variable $gold_22 in /home4/sridhanalakshmij/public_html/rate.php on line 58
+[01-Mar-2026 11:43:40 UTC] PHP Warning:  Undefined variable $gold_24 in /home4/sridhanalakshmij/public_html/rate.php on line 64
+[01-Mar-2026 11:43:40 UTC] PHP Warning:  Undefined variable $silver in /home4/sridhanalakshmij/public_html/rate.php on line 70
+[01-Mar-2026 11:45:55 UTC] PHP Warning:  Undefined variable $gold_18 in /home4/sridhanalakshmij/public_html/rate.php on line 53
+[01-Mar-2026 11:45:55 UTC] PHP Warning:  Undefined variable $gold_22 in /home4/sridhanalakshmij/public_html/rate.php on line 58
+[01-Mar-2026 11:45:55 UTC] PHP Warning:  Undefined variable $gold_24 in /home4/sridhanalakshmij/public_html/rate.php on line 64
+[01-Mar-2026 11:45:55 UTC] PHP Warning:  Undefined variable $silver in /home4/sridhanalakshmij/public_html/rate.php on line 70
+[01-Mar-2026 11:47:12 UTC] PHP Warning:  Undefined variable $gold_18 in /home4/sridhanalakshmij/public_html/rate.php on line 53
+[01-Mar-2026 11:47:12 UTC] PHP Warning:  Undefined variable $gold_22 in /home4/sridhanalakshmij/public_html/rate.php on line 58
+[01-Mar-2026 11:47:12 UTC] PHP Warning:  Undefined variable $gold_24 in /home4/sridhanalakshmij/public_html/rate.php on line 64
+[01-Mar-2026 11:47:12 UTC] PHP Warning:  Undefined variable $silver in /home4/sridhanalakshmij/public_html/rate.php on line 70

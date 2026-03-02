@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DHANALAKSHMI Jewellery</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body>
+    <!-- TOP BAR -->
+    <div class="top-bar">
+      <div class="left">
+        <i class="fa-solid fa-phone"></i> +91-9361795050
+        <i class="fa-solid fa-envelope"></i> Ajay@gmail.com
+      </div>
+      <div class="right">
+        <i class="fa-solid fa-location-dot"></i> Arcot &nbsp; | &nbsp; Track
+        Order &nbsp; | &nbsp; Log In &nbsp; | &nbsp; Sign Up
+      </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav>
+      <div class="logo">DHANALAKSHMI Jewellery</div>
+
+      <ul>
+        <!-- GOLD RATE BUTTON -->
+        <li>
+          <div class="rate-btn" onclick="toggleRate()">
+            <img src="assets/images/gold.png" /> GOLD 22KT / 1g – ₹11725
+            <i class="fa-solid fa-chevron-down" style="margin-left: 6px"></i>
+          </div>
+
+          <div class="rate-dropdown" id="rateDropdown">
+            <div class="rate-item">
+              <img src="assets/images/gold.png" /> GOLD 24 KT / 1g – ₹12800
+            </div>
+            <div class="rate-item">
+              <img src="assets/images/gold.png" /> GOLD 22 KT / 1g – ₹11725
+            </div>
+            <div class="rate-item">
+              <img src="assets/images/gold.png" /> GOLD 18 KT / 1g – ₹9600
+            </div>
+            <div class="rate-item">
+              <img src="assets/images/gold.png" /> GOLD 14 KT / 1g – ₹7466
+            </div>
+            <div class="rate-item">
+              <img src="assets/images/platinum.png" /> PLATINUM 1g – ₹5472
+            </div>
+            <div class="rate-item">
+              <img src="assets/images/silver.png" /> SILVER 1g – ₹176
+            </div>
+          </div>
+        </li>
+
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Shop</a></li>
+        <li><a href="#">Products</a></li>
+        <li><a href="about us.html">About Us</a></li>
+        <li><a href="#">Why Us</a></li>
+        <li><a href="#">Gallery</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+
+      <div class="nav-icons">
+        <input type="text" placeholder="Search" />
+        <i class="fa-solid fa-cart-shopping"></i>
+      </div>
+    </nav>
+
+    <!-- SLIDER -->
+    <section class="slider">
+      <div class="slides">
+        <img src="assets/images/s1.jpeg" class="slide active" />
+        <img src="assets/images/s2.jpeg" class="slide" />
+        <img src="assets/images/s3.jpeg" class="slide" />
+      </div>
+      <button class="prev" onclick="prevSlide()">❮</button>
+      <button class="next" onclick="nextSlide()">❯</button>
+    </section>
+
+    <!-- WHY US -->
+    <section class="why-us">
+      <h2>... Why Us ...</h2>
+      <div class="why-container">
+        <div class="box">
+          <img src="assets/images/greatcollection.jpeg" />
+          <p>Great Collection</p>
+        </div>
+        <div class="box">
+          <img src="assets/images/genuine.jpeg" />
+          <p>Reliable Products</p>
+        </div>
+        <div class="box">
+          <img src="assets/images/greatcollection.jpeg" />
+          <p>100% Genuine</p>
+        </div>
+        <div class="box">
+          <img src="assets/images/delivey.jpeg" />
+          <p>Free Shipping</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="gallery">
+      <h2>... Gallery ...</h2>
+      <div class="gallery-grid">
+        <img src="assets/images/dlogo.jpeg" />
+        <img src="assets/images/necklus.png" />
+        <img src="assets/images/ring.png" />
+        <img src="assets/images/ear.png" />
+        <img src="assets/images/dlogo.jpeg" />
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div>
+        <h3>Useful Links</h3>
+        <p>Home</p>
+        <p>Track Order</p>
+        <p>Privacy Policy</p>
+        <p>Jewellery Shop</p>
+      </div>
+
+      <div>
+        <h3>Contact</h3>
+        <p>Bazar Street, Arcot, Ranipet-632503, Tamil Nadu</p>
+        <p>+91-9361795050</p>
+        <p>Ajay@gmail.com</p>
+      </div>
+
+      <div>
+        <h3>Connect</h3>
+        <a href="#" style="color: white"
+          ><i class="fa-brands fa-facebook"></i
+        ></a>
+        <a href="#" style="color: white"
+          ><i class="fa-brands fa-instagram"></i
+        ></a>
+        <a href="#" style="color: white"
+          ><i class="fa-brands fa-youtube"></i
+        ></a>
+      </div>
+
+      <div>
+        <h3>Payments</h3>
+        <img src="assets/images/payment.jpeg" width="140" />
+      </div>
+    </footer>
+
+    <p class="copyright">© 2025 DHANALAKSHMI Jewellery. All Rights Reserved.</p>
+
+    <script>
+      /* GOLD RATE DROPDOWN */
+      function toggleRate() {
+        document.getElementById("rateDropdown").classList.toggle("active");
+      }
+
+      /* SLIDER */
+      let slideIndex = 0;
+      const slides = document.querySelectorAll(".slide");
+
+      function showSlide(n) {
+        slides.forEach((slide) => slide.classList.remove("active"));
+        slides[n].classList.add("active");
+      }
+      function nextSlide() {
+        slideIndex = (slideIndex + 1) % slides.length;
+        showSlide(slideIndex);
+      }
+      function prevSlide() {
+        slideIndex = (slideIndex - 1 + slides.length) % slides.length;
+        showSlide(slideIndex);
+      }
+      setInterval(nextSlide, 3000);
+    </script>
+  </body>
+</html>
