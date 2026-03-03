@@ -1,92 +1,63 @@
 import {
   Entypo,
   Feather,
+  FontAwesome,
   FontAwesome5,
   Ionicons,
   MaterialIcons,
 } from "@expo/vector-icons";
 import {
-  Dimensions,
-  Image,
+  Linking,
   Pressable,
-  StyleSheet,
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
-import logo from "../../assets/images/dlogo.jpeg";
 import PriceTicker from "../HomeComponents/PriceTicker";
-import { AppText, Img, VideoScreen } from "../common";
-import banner1 from "../../assets/images/1.jpg";
-import banner2 from "../../assets/images/2.jpg";
-import banner3 from "../../assets/images/s1.jpeg";
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from "react-native-reanimated";
-import { useEffect, useRef, useState } from "react";
-import { scheduleOnRN } from "react-native-worklets";
+import { AppText, Img, VideoScreen, width } from "../common";
 import goldBiscuit from "../../assets/images/gold.png";
 import silverBiscuit from "../../assets/images/silver.png";
-import bangle from "../../assets/images/bangle.jpeg";
-import necklace from "../../assets/images/necklus.jpeg";
-import ring from "../../assets/images/ring.jpeg";
-import stud from "../../assets/images/stud.jpeg";
-import whyusimg1 from "../../assets/images/collections.jpeg";
-import whyusimg2 from "../../assets/images/certified.jpeg";
-import whyusimg3 from "../../assets/images/shipping.jpeg";
-import video1 from "../../assets/videos/v1.mp4";
-import video2 from "../../assets/videos/v2.mp4";
 import React from "react";
-import { Button } from "react-native";
-import { VideoSource, VideoView, useVideoPlayer } from "expo-video";
-import { useEvent } from "expo";
 import WebView from "react-native-webview";
+import Navbar from "../HomeComponents/Navbar";
+import { ImageSlider } from "../HomeComponents/ImageSlider";
+import { HomeScreenNavigationProp } from "../../App";
+import {
+  galleryImages,
+  testimonials,
+  whyUsData,
+} from "../HomeComponents/HomeScreenData";
 
-const testimonials = [
-  {
-    name: "Anita R.",
-    location: "Chennai",
-    comment:
-      "Absolutely stunning craftsmanship. The gold quality and detailing exceeded my expectations. Perfect for special occasions.",
-  },
-  {
-    name: "Rahul K.",
-    location: "Bangalore",
-    comment:
-      "Pure gold, honest pricing, and certified quality. I felt confident purchasing here and will definitely return.",
-  },
-  {
-    name: "Sneha M.",
-    location: "Coimbatore",
-    comment:
-      "Safe delivery, beautiful packaging, and amazing support. The entire experience felt premium.",
-  },
-];
+type HomeProps = {
+  navigation: HomeScreenNavigationProp;
+};
 
-const bannerImage = [banner1, banner2, banner3];
-const galleryImages = [bangle, necklace, ring, stud];
-const whyUsData = [
-  {
-    title: "Curated Collection",
-    desc: "Handpicked designs for daily wear, festivals, and weddings.",
-    img: whyusimg1,
-  },
-  {
-    title: "100% Certified Purity",
-    desc: "Hallmarked gold & silver with guaranteed authenticity.",
-    img: whyusimg2,
-  },
-  {
-    title: "Free & Secure Shipping",
-    desc: "Free delivery above ₹200 with safe and insured packaging.",
-    img: whyusimg3,
-  },
-];
+export default function HomeScreen({ navigation }: HomeProps) {
+  const openWhatsApp = () => {
+    const phone = "919361795050"; // country code + number
+    const url = `https://wa.me/${phone}`;
 
-export default function Home() {
+    Linking.openURL(url);
+  };
+
+  return (
+    <View className="flex-1">
+      <ScrollView className="flex-1 bg-gray-100">
+        <Home navigation={navigation} />
+      </ScrollView>
+      <Pressable
+        onPress={() => openWhatsApp()}
+        className="absolute bottom-6 right-6 bg-green-500 w-16 h-16 rounded-full items-center justify-center shadow-lg z-50"
+      >
+        <FontAwesome name="whatsapp" size={24} color="white" />
+      </Pressable>
+    </View>
+  );
+}
+
+export function Home({ navigation }: HomeProps) {
   return (
     <View className="sm:hidden block bg-[#FFF6EC] w-full  relative  text-left mx-auto">
       {/* Top Gold Rate Bar */}
@@ -134,6 +105,21 @@ export default function Home() {
             </AppText>
             <AppText className="text-sm text-gray-500">
               Explore Silver designs
+            </AppText>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Scheme")}
+            className="bg-white w-full mt-5 py-5 flex justify-center items-center shadow-lg rounded-xl"
+          >
+            <View className="w-28 h-28 mx-auto flex items-center mb-5 justify-center rounded-full bg-orange-50 group-hover:scale-105 transition">
+              <MaterialIcons name="savings" size={50} color="black" />
+            </View>
+            <AppText className="font-poppins-bold text-lg text-orange-700">
+              Saving Schemes
+            </AppText>
+            <AppText className="text-sm text-gray-500">
+              Explore Saving Schemes
             </AppText>
           </TouchableOpacity>
         </View>
@@ -427,83 +413,6 @@ export default function Home() {
             </AppText>
           </View>
         </View>
-      </View>
-    </View>
-  );
-}
-
-const Navbar = () => {
-  return (
-    <View className="bg-white flex-row items-center justify-between px-4 py-3">
-      <View className="flex-row items-center gap-2">
-        <Img src={logo} size={44} className="rounded-full " />
-
-        <AppText className="font-poppins-bold text-[#b26a00] text-lg">
-          SRI DHANALAKSHMI Jewellery
-        </AppText>
-      </View>
-
-      <TouchableOpacity onPress={() => console.log("Menu Clicked")}>
-        <MaterialIcons name="menu" size={24} color="black" />
-      </TouchableOpacity>
-    </View>
-  );
-};
-
-const { width, height } = Dimensions.get("window");
-
-export function ImageSlider() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const opacity = useSharedValue(1);
-
-  const changeIndex = () => {
-    setCurrentIndex((prev) => (prev + 1) % bannerImage.length);
-  };
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      // Fade out
-      opacity.value = withTiming(0, { duration: 500 }, () => {
-        // Update index after fade out
-        scheduleOnRN(changeIndex);
-
-        // Fade in
-        opacity.value = withTiming(1, { duration: 500 });
-      });
-    }, 2000);
-
-    return () => clearInterval(interval);
-  }, [currentIndex, opacity]);
-
-  const animatedStyle = useAnimatedStyle(() => {
-    return { opacity: opacity.value };
-  });
-
-  return (
-    <View className="w-full relative">
-      <Animated.Image
-        source={bannerImage[currentIndex]}
-        className="w-full aspect-[134/53]"
-        style={[
-          {
-            width: width, // full device width
-            height: (width * 530) / 1340, // maintain aspect ratio
-            maxHeight: height * 0.4, // limit height to 40% of screen
-          },
-          animatedStyle,
-        ]}
-        resizeMode="cover"
-      />
-
-      <View className="absolute bottom-4 w-full flex-row justify-center gap-2">
-        {bannerImage.map((_, i) => (
-          <View
-            key={i}
-            className={`w-3 h-3 rounded-full ${
-              i === currentIndex ? "bg-white" : "bg-gray-400"
-            }`}
-          />
-        ))}
       </View>
     </View>
   );

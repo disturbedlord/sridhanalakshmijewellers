@@ -1,5 +1,6 @@
 import {
   Button,
+  Dimensions,
   Image,
   ImageProps,
   ImageResizeMode,
@@ -12,6 +13,9 @@ import { ImageSourcePropType } from "react-native";
 import React, { memo } from "react";
 import { useVideoPlayer, VideoView } from "expo-video";
 import { useEvent } from "expo";
+import { ActivityIndicator } from "react-native";
+
+export const { width, height } = Dimensions.get("window");
 
 type Props = TextProps & {
   className?: string;
@@ -75,6 +79,18 @@ export function VideoScreen({ videoSource }: VideoScreenProps) {
     </View>
   );
 }
+
+export const Loader = () => {
+  return (
+    <View className=" justify-center items-center rounded-lg h-44 bg-white p-4 my-2">
+      {/* Loader */}
+      <ActivityIndicator size="large" color="black" className="mb-4" />
+      <AppText className="text-lg font-semibold text-black">
+        Fetching Data from Server
+      </AppText>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   contentContainer: {
