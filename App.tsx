@@ -16,7 +16,7 @@ import {
   Poppins_600SemiBold,
 } from "@expo-google-fonts/poppins";
 import Home from "./components/Pages/HomePage";
-import { AppText } from "./components/common";
+import { AppText, Loader } from "./components/common";
 import { FontAwesome } from "@expo/vector-icons";
 import HomeScreen from "./components/Pages/HomePage";
 import {
@@ -29,6 +29,19 @@ import AuthScreen from "./components/Pages/AuthScreen";
 import { AuthProvider } from "./context/AuthContext";
 import SchemeScreen from "./components/Pages/SchemeScreen";
 import DashboardScreen from "./components/Pages/DashboardScreen";
+import AppNavigator from "./components/Pages/AppNavigator";
+import { useCallback, useEffect, useState } from "react";
+import { getOrCreateDeviceId } from "./services/ClientSideService";
+import { logger } from "./utils/logger";
+import { refreshAccessToken } from "./services/AuthService";
+import * as SplashScreen from "expo-splash-screen";
+import * as SecureStore from "expo-secure-store";
+import { jwtDecode } from "jwt-decode";
+
+SplashScreen.preventAutoHideAsync();
+type TokenPayload = {
+  exp: number;
+};
 
 // 1️⃣ Define your route types
 export type RootStackParamList = {
@@ -48,34 +61,81 @@ export type HomeScreenNavigationProp = NativeStackNavigationProp<
 >;
 
 export default function App() {
+  // TO ensure device id is fetched
+  const [loading, setLoading] = useState<boolean>(true);
+
   const [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_700Bold,
     Poppins_600SemiBold,
   });
 
-  if (!fontsLoaded) {
-    return null; // or splash screen
+  useEffect(() => {
+    const initDevice = async () => {
+      try {
+        const deviceId = await getOrCreateDeviceId();
+        logger.debug("Device Id : " + deviceId);
+      } catch (error) {
+        console.error("Device ID generation failed", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    initDevice();
+  }, []);
+
+  const [initialRoute, setInitialRoute] = useState<string | null>(null);
+
+  useEffect(() => {
+    initAuth();
+  }, []);
+
+  const initAuth = async () => {
+    const access = await SecureStore.getItemAsync("accessToken");
+    const refresh = await SecureStore.getItemAsync("refreshToken");
+
+    if (!access || !refresh) {
+      setInitialRoute("Auth");
+      return;
+    }
+
+    const decoded = jwtDecode<TokenPayload>(access);
+    const now = Date.now() / 1000;
+
+    if (decoded.exp > now) {
+      setInitialRoute("Home");
+    } else {
+      const refreshed = await refreshAccessToken(refresh);
+      setInitialRoute(refreshed ? "Home" : "Auth");
+    }
+  };
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded && !loading) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded, loading]);
+
+  if (!fontsLoaded || loading || !initialRoute) {
+    return null;
   }
+
   return (
-    <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1 }}>
-        <AuthProvider>
-          <NavigationContainer>
-            <Stack.Navigator
-              screenOptions={{
-                headerShown: false,
-                animation: "fade",
-              }}
-            >
-              <Stack.Screen name="Home" component={HomeScreen} />
-              <Stack.Screen name="Auth" component={AuthScreen} />
-              <Stack.Screen name="Scheme" component={SchemeScreen} />
-              <Stack.Screen name="Dashboard" component={DashboardScreen} />
-            </Stack.Navigator>
-          </NavigationContainer>
-        </AuthProvider>
-      </SafeAreaView>
-    </SafeAreaProvider>
+    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+      <SafeAreaProvider>
+        <SafeAreaView style={{ flex: 1 }}>
+          {loading ? (
+            <Loader />
+          ) : (
+            <AuthProvider>
+              <NavigationContainer>
+                <AppNavigator initialRoute={initialRoute} />
+              </NavigationContainer>
+            </AuthProvider>
+          )}
+        </SafeAreaView>
+      </SafeAreaProvider>
+    </View>
   );
 }

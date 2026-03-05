@@ -113,7 +113,7 @@ export default function AuthScreen({ navigation }: AuthProps) {
     const result = await login(payload);
 
     if (result.status) {
-      navigation.navigate("Dashboard");
+      navigation.navigate("Home");
     } else {
       setLoginResponse(result);
     }

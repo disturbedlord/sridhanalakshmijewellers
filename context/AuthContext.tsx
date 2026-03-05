@@ -1,13 +1,15 @@
 import { createContext, useContext, useState } from "react";
 import { LoginPayload, UserLogin } from "../services/AuthService";
 import { logger } from "../utils/logger";
+import * as SecureStore from "expo-secure-store";
 
 type AuthContextType = {
   user: {
     user: string;
     name: string;
     message: string;
-    token: string;
+    accessToken: string;
+    refreshToken: string;
   } | null;
   login: (payload: LoginPayload) => Promise<{ msg: string; status: number }>;
   logout: () => void;
@@ -15,12 +17,18 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+async function saveTokens(access: string, refresh: string) {
+  await SecureStore.setItemAsync("accessToken", access);
+  await SecureStore.setItemAsync("refreshToken", refresh);
+}
+
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<{
     user: string;
     name: string;
     message: string;
-    token: string;
+    accessToken: string;
+    refreshToken: string;
   } | null>(null);
   const login = async (payload: LoginPayload) => {
     try {
@@ -29,6 +37,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       if (data && data.user) {
         setUser(data); // Store user
+        saveTokens(data.accessToken, data.refreshToken);
         return { msg: data.message, status: 1 };
       } else if (data && data.error) {
         return { msg: data.error, status: 0 };
