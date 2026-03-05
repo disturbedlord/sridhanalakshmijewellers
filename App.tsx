@@ -26,7 +26,7 @@ import {
 import { NavigationContainer } from "@react-navigation/native";
 import LoginPage from "./components/Pages/AuthScreen";
 import AuthScreen from "./components/Pages/AuthScreen";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider, useAuth } from "./context/AuthContext";
 import SchemeScreen from "./components/Pages/SchemeScreen";
 import DashboardScreen from "./components/Pages/DashboardScreen";
 import AppNavigator from "./components/Pages/AppNavigator";
@@ -37,6 +37,8 @@ import { refreshAccessToken } from "./services/AuthService";
 import * as SplashScreen from "expo-splash-screen";
 import * as SecureStore from "expo-secure-store";
 import { jwtDecode } from "jwt-decode";
+import DrawerNavigator from "./layout/DrawerLayout";
+import { clearSecureStore } from "./services/SecureStoreService";
 
 SplashScreen.preventAutoHideAsync();
 type TokenPayload = {
@@ -62,13 +64,38 @@ export type HomeScreenNavigationProp = NativeStackNavigationProp<
 
 export default function App() {
   // TO ensure device id is fetched
-  const [loading, setLoading] = useState<boolean>(true);
-
   const [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_700Bold,
     Poppins_600SemiBold,
   });
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
+  return (
+    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+      <SafeAreaProvider>
+        <SafeAreaView style={{ flex: 1 }}>
+          <AuthProvider>
+            <MainApp />
+          </AuthProvider>
+        </SafeAreaView>
+      </SafeAreaProvider>
+    </View>
+  );
+}
+
+function MainApp() {
+  const [loading, setLoading] = useState<boolean>(true);
+  const { setUser } = useAuth();
 
   useEffect(() => {
     const initDevice = async () => {
@@ -94,9 +121,20 @@ export default function App() {
   const initAuth = async () => {
     const access = await SecureStore.getItemAsync("accessToken");
     const refresh = await SecureStore.getItemAsync("refreshToken");
-
-    if (!access || !refresh) {
+    const name = await SecureStore.getItemAsync("userName");
+    const userMobileNo = await SecureStore.getItemAsync("userMobileNo");
+    console.log(access, refresh, name, userMobileNo);
+    setUser({
+      user: userMobileNo,
+      name: name,
+      message: "",
+      accessToken: access,
+      refreshToken: refresh,
+    });
+    if (!access || !refresh || !name || !userMobileNo) {
+      clearSecureStore();
       setInitialRoute("Auth");
+
       return;
     }
 
@@ -111,31 +149,11 @@ export default function App() {
     }
   };
 
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded && !loading) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded, loading]);
-
-  if (!fontsLoaded || loading || !initialRoute) {
-    return null;
-  }
+  if (!initialRoute) return null;
 
   return (
-    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <SafeAreaProvider>
-        <SafeAreaView style={{ flex: 1 }}>
-          {loading ? (
-            <Loader />
-          ) : (
-            <AuthProvider>
-              <NavigationContainer>
-                <AppNavigator initialRoute={initialRoute} />
-              </NavigationContainer>
-            </AuthProvider>
-          )}
-        </SafeAreaView>
-      </SafeAreaProvider>
-    </View>
+    <NavigationContainer>
+      <DrawerNavigator />
+    </NavigationContainer>
   );
 }

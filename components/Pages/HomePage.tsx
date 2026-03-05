@@ -34,7 +34,7 @@ type HomeProps = {
   navigation: HomeScreenNavigationProp;
 };
 
-export default function HomeScreen({ navigation }: HomeProps) {
+export default function HomeScreen({ navigation }: any) {
   const openWhatsApp = () => {
     const phone = "919361795050"; // country code + number
     const url = `https://wa.me/${phone}`;
@@ -57,14 +57,10 @@ export default function HomeScreen({ navigation }: HomeProps) {
   );
 }
 
-export function Home({ navigation }: HomeProps) {
+export function Home({ navigation }: any) {
   return (
     <View className="sm:hidden block bg-[#FFF6EC] w-full  relative  text-left mx-auto">
       {/* Top Gold Rate Bar */}
-      <View className="flex flex-row  space-x-2 pl-2 bg-[#FEF7F7] ">
-        <PriceTicker />
-      </View>
-      <Navbar />
 
       {/* Banner */}
       <ImageSlider />
@@ -105,21 +101,6 @@ export function Home({ navigation }: HomeProps) {
             </AppText>
             <AppText className="text-sm text-gray-500">
               Explore Silver designs
-            </AppText>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Scheme")}
-            className="bg-white w-full mt-5 py-5 flex justify-center items-center shadow-lg rounded-xl"
-          >
-            <View className="w-28 h-28 mx-auto flex items-center mb-5 justify-center rounded-full bg-orange-50 group-hover:scale-105 transition">
-              <MaterialIcons name="savings" size={50} color="black" />
-            </View>
-            <AppText className="font-poppins-bold text-lg text-orange-700">
-              Saving Schemes
-            </AppText>
-            <AppText className="text-sm text-gray-500">
-              Explore Saving Schemes
             </AppText>
           </TouchableOpacity>
         </View>

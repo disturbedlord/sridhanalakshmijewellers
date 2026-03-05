@@ -2,6 +2,7 @@ import { createContext, useContext, useState } from "react";
 import { LoginPayload, UserLogin } from "../services/AuthService";
 import { logger } from "../utils/logger";
 import * as SecureStore from "expo-secure-store";
+import { clearSecureStore } from "../services/SecureStoreService";
 
 type AuthContextType = {
   user: {
@@ -11,15 +12,31 @@ type AuthContextType = {
     accessToken: string;
     refreshToken: string;
   } | null;
+  setUser: (
+    user: {
+      user: string;
+      name: string;
+      message: string;
+      accessToken: string;
+      refreshToken: string;
+    } | null,
+  ) => void;
   login: (payload: LoginPayload) => Promise<{ msg: string; status: number }>;
   logout: () => void;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-async function saveTokens(access: string, refresh: string) {
+async function saveTokens(
+  access: string,
+  refresh: string,
+  name: string,
+  userMobileNo: string,
+) {
   await SecureStore.setItemAsync("accessToken", access);
   await SecureStore.setItemAsync("refreshToken", refresh);
+  await SecureStore.setItemAsync("userName", name);
+  await SecureStore.setItemAsync("userMobileNo", userMobileNo);
 }
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -37,7 +54,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       if (data && data.user) {
         setUser(data); // Store user
-        saveTokens(data.accessToken, data.refreshToken);
+        saveTokens(data.accessToken, data.refreshToken, data.name, data.user);
         return { msg: data.message, status: 1 };
       } else if (data && data.error) {
         return { msg: data.error, status: 0 };
@@ -52,10 +69,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const logout = () => {
     setUser(null);
+    clearSecureStore();
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, setUser, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
