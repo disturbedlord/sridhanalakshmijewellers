@@ -5,13 +5,14 @@ import CustomDrawerContent from "../components/Drawer/DrawerComponent";
 import AuthScreen from "../components/Pages/AuthScreen";
 import Layout from "./NavbarLayout";
 import SchemeScreen from "../components/Pages/SchemeScreen";
+import SchemeDetails from "../components/Pages/SchemeDetails";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Drawer = createDrawerNavigator();
 
 export default function DrawerNavigator({ navigation }: any) {
   return (
     <Drawer.Navigator
-      initialRouteName="Home"
       screenOptions={{
         header: () => <Layout />,
         drawerStyle: {
@@ -24,10 +25,23 @@ export default function DrawerNavigator({ navigation }: any) {
       }}
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
-      <Drawer.Screen name="Home" component={HomeScreen} />
-      <Drawer.Screen name="SavingSchemes" component={SchemeScreen} />
-      <Drawer.Screen name="Settings" component={HomeScreen} />
-      <Drawer.Screen name="Auth" component={AuthScreen} />
+      <Drawer.Screen name="Schemes" component={SchemeStack} />
     </Drawer.Navigator>
+  );
+}
+
+const Stack = createNativeStackNavigator();
+
+function SchemeStack() {
+  return (
+    <Stack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="Home"
+    >
+      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="SavingSchemes" component={SchemeScreen} />
+      <Stack.Screen name="SchemeDetails" component={SchemeDetails} />
+      <Stack.Screen name="Auth" component={AuthScreen} />
+    </Stack.Navigator>
   );
 }

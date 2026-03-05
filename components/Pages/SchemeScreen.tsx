@@ -1,26 +1,100 @@
-import { Image, ScrollView, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  ImageBackground,
+  Module,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { AppText, Img, width } from "../common";
-import React from "react";
+import React, { useState } from "react";
 import { Text, FlatList, StyleSheet } from "react-native";
 import { HomeScreenNavigationProp } from "../../App";
-import saving1000 from "../../assets/savingSchemes/saving1000.png";
-import logo from "../../assets/images/dlogo.jpeg";
-type DashboardProps = {
-  navigation: HomeScreenNavigationProp;
+import { schemeData } from "../SchemeComponents/SchemeData";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
+export type RootStackParamList = {
+  SchemeList: undefined;
+  SchemeDetails: { scheme: Scheme }; // 'scheme' is the key expected
 };
 
-export default function SchemeScreen({ navigation }: DashboardProps) {
+export type Scheme = {
+  scheme_id: number;
+  name: string;
+  price_per_unit: number;
+  units: number;
+  gift: string;
+  total_amount: number;
+  company_contribution: number;
+  created_at: string;
+  img: any;
+};
+
+type SchemeListNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "SchemeList"
+>;
+
+export default function SchemeScreen() {
+  const navigation = useNavigation<SchemeListNavigationProp>();
+  const [mySchemes, setMySchemes] = useState(undefined);
   return (
-    <ScrollView className="flex-1 bg-gray-100">
-      <View className="flex">
-        <View className="rounded-lg border ">
-          <Img src={saving1000} size={width - 40} borderRadius={24} />
-        </View>
-        <AppText>Hi</AppText>
+    <View className=" bg-gray-100 py-4">
+      <View className="px-4 flex  mb-2">
+        <AppText className="text-xl font-poppins-bold text-gray-800 mt-2">
+          Saving Schemes
+        </AppText>
+
+        <View className="border-b-4 rounded-xl mt-1 mb-2 border-b-orange-400 w-44 h-0"></View>
       </View>
-    </ScrollView>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        className=""
+      >
+        <View className="flex-row gap-4 px-10">
+          {schemeData.map((item, idx) => (
+            <TouchableOpacity
+              key={idx}
+              onPress={() => navigation.push("SchemeDetails", { scheme: item })}
+            >
+              <SchemeCard img={item.img} />
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ScrollView>
+
+      <View className="px-4 my-4">
+        <AppText className="font-poppins-bold text-xl">
+          My Saving Schemes
+        </AppText>
+        <View className="border-b-4 rounded-xl mt-1 mb-2 border-b-orange-400 w-52 h-0"></View>
+        <View>
+          {!mySchemes ? (
+            <View className="flex items-center  h-24 justify-center">
+              <AppText>Nothing to Show</AppText>
+            </View>
+          ) : null}
+        </View>
+      </View>
+    </View>
   );
 }
+
+const SchemeCard = ({ key, img }: any) => {
+  return (
+    <View className="  bg-transparent rounded-2xl flex items-center justify-center ">
+      <ImageBackground
+        source={img}
+        resizeMode="cover"
+        className="w-72 h-40 rounded-2xl overflow-hidden shadow-lg bg-white"
+      >
+        <View className="flex-1 justify-end p-4"></View>
+      </ImageBackground>
+    </View>
+  );
+};
 
 {
   /* <View className="flex-1">
