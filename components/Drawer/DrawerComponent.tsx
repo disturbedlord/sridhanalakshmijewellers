@@ -39,6 +39,7 @@ export default function CustomDrawerContent(props: any) {
           labelStyle={{
             fontFamily: "Poppins_600SemiBold",
             color: "black",
+            fontSize: 16,
           }}
           label="Home"
           onPress={() => navigation.navigate("Home")}
@@ -46,6 +47,7 @@ export default function CustomDrawerContent(props: any) {
         <DrawerItem
           labelStyle={{
             color: "black",
+            fontSize: 16,
 
             fontFamily: "Poppins_600SemiBold",
           }}
@@ -55,9 +57,11 @@ export default function CustomDrawerContent(props: any) {
         <DrawerItem
           labelStyle={{
             color: "black",
+            fontSize: 16,
+
             fontFamily: "Poppins_600SemiBold",
           }}
-          label="Settings"
+          label="Payment History"
           onPress={() => navigation.navigate("Settings")}
         />
       </DrawerContentScrollView>
@@ -82,6 +86,7 @@ const styles = StyleSheet.create({
   logoutButton: {
     backgroundColor: "transparent",
     marginHorizontal: 10,
+    marginBottom: 20,
   },
   logoutText: {
     color: "red",
