@@ -11,7 +11,7 @@ import {
   Platform,
   StyleSheet,
 } from "react-native";
-import { AppText } from "../common";
+import { AppText, Img, Spinner } from "../common";
 import {
   LoginPayload,
   RegisterPayload,
@@ -21,6 +21,7 @@ import {
 import { logger } from "../../utils/logger";
 import { useAuth } from "../../context/AuthContext";
 import { HomeScreenNavigationProp } from "../../App";
+import logo from "../../assets/images/dlogo.jpeg";
 
 const OTP_LENGTH = 4;
 
@@ -34,8 +35,12 @@ export default function AuthScreen({ navigation }: AuthProps) {
   const [activeTab, setActiveTab] = useState<"login" | "register">("login");
 
   // Login state
-  const [loginPhone, setLoginPhone] = useState<string>("");
-  const [loginpassword, setLoginPassword] = useState<string>("");
+  const [loginPhone, setLoginPhone] = useState<string>(
+    process.env.EXPO_PUBLIC_ENVIRONMENT === "dev" ? "9003189632" : "",
+  );
+  const [loginpassword, setLoginPassword] = useState<string>(
+    process.env.EXPO_PUBLIC_ENVIRONMENT === "dev" ? "Q" : "",
+  );
 
   const [loginOtp, setLoginOtp] = useState<string[]>(
     Array(OTP_LENGTH).fill(""),
@@ -48,7 +53,7 @@ export default function AuthScreen({ navigation }: AuthProps) {
   const [regOtp, setRegOtp] = useState<string[]>(Array(OTP_LENGTH).fill(""));
   const regInputs = useRef<(TextInput | null)[]>([]);
   const [regPassword, setRegPassword] = useState<string>("");
-
+  const [loading, setLoading] = useState(false);
   const [regResponse, setRegResponse] = useState<{
     msg: string;
     status: number;
@@ -90,21 +95,24 @@ export default function AuthScreen({ navigation }: AuthProps) {
   }
 
   const handleRegister = async () => {
+    setLoading(true);
     const payload: RegisterPayload = {
       mobile_no: regPhone,
       name: regName,
       password: regPassword,
     };
     const result = await UserRegister(payload);
-    logger.debug(result);
+    // logger.debug(result);
     if (result) {
       setRegResponse({ msg: result, status: 1 });
     } else {
       setRegResponse({ msg: "Register Failed", status: 0 });
     }
+    setLoading(false);
   };
 
   const handleLogin = async () => {
+    setLoading(true);
     const payload: LoginPayload = {
       mobile_no: loginPhone,
       password: loginpassword,
@@ -117,6 +125,7 @@ export default function AuthScreen({ navigation }: AuthProps) {
     } else {
       setLoginResponse(result);
     }
+    setLoading(false);
   };
 
   return (
@@ -125,6 +134,20 @@ export default function AuthScreen({ navigation }: AuthProps) {
       style={styles.container}
     >
       <View className="flex-1 bg-[#F5EFE6] px-6 pt-12">
+        {/* Logo */}
+        <View className="flex flex-col items-center mb-5">
+          <Img
+            src={logo}
+            size={64}
+            resize="cover"
+            className="rounded-full mb-2"
+          />
+          <AppText className="font-poppins-bold text-lg">
+            {" "}
+            Sri Dhanalakshmi Jewellers
+          </AppText>
+          <AppText className="text-sm font-poppins-semibold">Arcot</AppText>
+        </View>
         {/* Tabs */}
         <View className="flex-row justify-center mb-8">
           <TouchableOpacity
@@ -180,7 +203,7 @@ export default function AuthScreen({ navigation }: AuthProps) {
                 onChangeText={setLoginPhone}
                 keyboardType="phone-pad"
                 placeholder="Enter mobile number"
-                className="border border-gray-300 rounded-xl px-4 py-3 mb-5 bg-gray-50"
+                className="border border-gray-300 font-poppins text-black rounded-xl px-4 py-3 mb-5 bg-gray-50"
               />
 
               {/* Password Input */}
@@ -192,7 +215,7 @@ export default function AuthScreen({ navigation }: AuthProps) {
                 onChangeText={setLoginPassword}
                 secureTextEntry={true}
                 placeholder="Enter password"
-                className="border border-gray-300 rounded-xl px-4 py-3 mb-5 bg-gray-50"
+                className="border border-gray-300 font-poppins text-black rounded-xl px-4 py-3 mb-5 bg-gray-50"
               />
 
               {/* OTP
@@ -236,8 +259,9 @@ export default function AuthScreen({ navigation }: AuthProps) {
               )}
               <TouchableOpacity
                 onPress={handleLogin}
-                className="bg-[#D4AF37] py-4 rounded-xl shadow-md active:opacity-80"
+                className="bg-[#D4AF37] h-16 flex flex-row items-center justify-center py-4 rounded-xl shadow-md "
               >
+                {loading && <Spinner color={"white"} />}
                 <AppText className="text-center text-white font-poppins-semibold text-lg">
                   Login
                 </AppText>
@@ -257,7 +281,7 @@ export default function AuthScreen({ navigation }: AuthProps) {
                 value={regName}
                 onChangeText={setRegName}
                 placeholder="Enter your name"
-                className="border border-gray-300 rounded-xl px-4 py-3 mb-4 bg-gray-50"
+                className="border border-gray-300 font-poppins rounded-xl px-4 py-3 mb-4 bg-gray-50"
               />
 
               {/* Phone */}
@@ -267,7 +291,7 @@ export default function AuthScreen({ navigation }: AuthProps) {
                 onChangeText={setRegPhone}
                 keyboardType="phone-pad"
                 placeholder="Enter mobile number"
-                className="border border-gray-300 rounded-xl px-4 py-3 mb-5 bg-gray-50"
+                className="border border-gray-300 font-poppins rounded-xl px-4 py-3 mb-5 bg-gray-50"
               />
 
               {/* Password */}
@@ -277,7 +301,7 @@ export default function AuthScreen({ navigation }: AuthProps) {
                 value={regPassword}
                 onChangeText={setRegPassword}
                 placeholder="Enter Password"
-                className="border border-gray-300 rounded-xl px-4 py-3 mb-5 bg-gray-50"
+                className="border border-gray-300 font-poppins text-black rounded-xl px-4 py-3 mb-5 bg-gray-50"
               />
 
               {/* OTP
@@ -315,8 +339,9 @@ export default function AuthScreen({ navigation }: AuthProps) {
               )}
               <TouchableOpacity
                 onPress={handleRegister}
-                className="bg-[#D4AF37] py-4 rounded-xl shadow-md active:opacity-80"
+                className="bg-[#D4AF37] h-16 flex flex-row items-center justify-center py-4 rounded-xl shadow-md "
               >
+                {loading && <Spinner color={"white"} />}
                 <AppText className="text-center text-white font-poppins-semibold text-lg">
                   Register
                 </AppText>

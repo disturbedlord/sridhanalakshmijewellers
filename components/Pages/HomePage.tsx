@@ -19,7 +19,7 @@ import PriceTicker from "../HomeComponents/PriceTicker";
 import { AppText, Img, VideoScreen, width } from "../common";
 import goldBiscuit from "../../assets/images/gold.png";
 import silverBiscuit from "../../assets/images/silver.png";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import WebView from "react-native-webview";
 import Navbar from "../HomeComponents/Navbar";
 import { ImageSlider } from "../HomeComponents/ImageSlider";
@@ -29,6 +29,8 @@ import {
   testimonials,
   whyUsData,
 } from "../HomeComponents/HomeScreenData";
+import { GetLatestPrice } from "../../services/DashboardService";
+import { getAccessToken } from "../../context/AuthContext";
 
 type HomeProps = {
   navigation: HomeScreenNavigationProp;

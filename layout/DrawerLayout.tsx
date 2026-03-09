@@ -7,14 +7,17 @@ import Layout from "./NavbarLayout";
 import SchemeScreen from "../components/Pages/SchemeScreen";
 import SchemeDetails from "../components/Pages/SchemeDetails";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import MySchemeDetails from "../components/Pages/MySchemeDetails";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
+import Navbar from "../components/HomeComponents/Navbar";
 
 const Drawer = createDrawerNavigator();
 
-export default function DrawerNavigator({ navigation }: any) {
+export default function DrawerNavigator({ initialRoute }: any) {
   return (
     <Drawer.Navigator
       screenOptions={{
-        header: () => <Layout />,
+        headerShown: false,
         drawerStyle: {
           borderTopRightRadius: 0,
           borderBottomRightRadius: 0,
@@ -25,23 +28,47 @@ export default function DrawerNavigator({ navigation }: any) {
       }}
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
-      <Drawer.Screen name="Schemes" component={SchemeStack} />
+      <Drawer.Screen
+        name="Schemes"
+        component={SchemeStack}
+        initialParams={{ initialRoute: initialRoute }}
+      />
     </Drawer.Navigator>
   );
 }
 
 const Stack = createNativeStackNavigator();
 
-function SchemeStack() {
+function SchemeStack({ route, navigation }: any) {
+  const { initialRoute } = route.params;
   return (
-    <Stack.Navigator
-      screenOptions={{ headerShown: false }}
-      initialRouteName="Home"
-    >
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="SavingSchemes" component={SchemeScreen} />
-      <Stack.Screen name="SchemeDetails" component={SchemeDetails} />
-      <Stack.Screen name="Auth" component={AuthScreen} />
+    <Stack.Navigator initialRouteName={initialRoute}>
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Auth"
+        component={AuthScreen}
+      />
+
+      <Stack.Screen
+        options={{ header: () => <Navbar /> }}
+        name="Home"
+        component={HomeScreen}
+      />
+      <Stack.Screen
+        options={{ header: () => <Navbar /> }}
+        name="SavingSchemes"
+        component={SchemeScreen}
+      />
+      <Stack.Screen
+        options={{ header: () => <Navbar /> }}
+        name="SchemeDetails"
+        component={SchemeDetails}
+      />
+      <Stack.Screen
+        options={{ header: () => <Navbar /> }}
+        name="MySchemeDetails"
+        component={MySchemeDetails}
+      />
     </Stack.Navigator>
   );
 }

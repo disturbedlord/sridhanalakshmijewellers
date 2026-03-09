@@ -16,7 +16,7 @@ export default function DashboardScreen() {
   const getAllSchemes = async () => {
     setLoading(true);
     const schemes = await GetAllSchemes(user?.token);
-    logger.debug(schemes);
+    // logger.debug(schemes);
     if (schemes && schemes["schemes"].length > 0) {
       const formatted = schemes.schemes.map((item: any) => ({
         label: item.name,

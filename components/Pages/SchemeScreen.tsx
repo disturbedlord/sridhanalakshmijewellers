@@ -6,29 +6,27 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { AppText, Img, width } from "../common";
-import React, { useState } from "react";
+import { AppText, Img, Loader, width } from "../common";
+import React, { useCallback, useEffect, useState } from "react";
 import { Text, FlatList, StyleSheet } from "react-native";
 import { HomeScreenNavigationProp } from "../../App";
-import { schemeData } from "../SchemeComponents/SchemeData";
-import { useNavigation } from "@react-navigation/native";
+import {
+  getSchemeData,
+  schemeData,
+  SchemeType,
+} from "../SchemeComponents/SchemeData";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { getAccessToken, getUserId } from "../../context/AuthContext";
+import {
+  GetAllUserSchemes,
+  GetSchemeCardDetails,
+} from "../../services/SchemeService";
+import { logger } from "../../utils/logger";
 
 export type RootStackParamList = {
   SchemeList: undefined;
-  SchemeDetails: { scheme: Scheme }; // 'scheme' is the key expected
-};
-
-export type Scheme = {
-  scheme_id: number;
-  name: string;
-  price_per_unit: number;
-  units: number;
-  gift: string;
-  total_amount: number;
-  company_contribution: number;
-  created_at: string;
-  img: any;
+  SchemeDetails: { scheme: SchemeType }; // 'scheme' is the key expected
 };
 
 type SchemeListNavigationProp = NativeStackNavigationProp<
@@ -36,49 +34,86 @@ type SchemeListNavigationProp = NativeStackNavigationProp<
   "SchemeList"
 >;
 
-export default function SchemeScreen() {
-  const navigation = useNavigation<SchemeListNavigationProp>();
+export default function SchemeScreen({ navigation, route }) {
+  // const navigation = useNavigation<SchemeListNavigationProp>();
   const [mySchemes, setMySchemes] = useState(undefined);
+  const userId = getUserId();
+  const [loading, setLoading] = useState(true);
+  const userAccessToken = getAccessToken();
+  const GetUserSchemes = async () => {
+    setLoading(true);
+    const result = await GetAllUserSchemes(userId, userAccessToken);
+    logger.debug("Get User Schemes : ", result);
+    if (result.status === 1) {
+      setMySchemes(result.rows);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    GetUserSchemes();
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      GetUserSchemes();
+    }, []),
+  );
+
   return (
-    <View className=" bg-gray-100 py-4">
-      <View className="px-4 flex  mb-2">
-        <AppText className="text-xl font-poppins-bold text-gray-800 mt-2">
-          Saving Schemes
-        </AppText>
+    <ScrollView className="flex-1 bg-white">
+      <View className="  py-4">
+        <View className="px-4 flex  mb-2">
+          <AppText className="text-xl font-poppins-bold text-gray-800 mt-2">
+            Saving Schemes
+          </AppText>
 
-        <View className="border-b-4 rounded-xl mt-1 mb-2 border-b-orange-400 w-44 h-0"></View>
-      </View>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        className=""
-      >
-        <View className="flex-row gap-4 px-10">
-          {schemeData.map((item, idx) => (
-            <TouchableOpacity
-              key={idx}
-              onPress={() => navigation.push("SchemeDetails", { scheme: item })}
-            >
-              <SchemeCard img={item.img} />
-            </TouchableOpacity>
-          ))}
+          <View className="border-b-4 rounded-xl mt-1 mb-2 border-b-orange-400 w-44 h-0"></View>
         </View>
-      </ScrollView>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          className=""
+        >
+          <View className="flex-row gap-4 px-10">
+            {schemeData.map((item, idx) => (
+              <TouchableOpacity
+                key={idx}
+                onPress={() => {
+                  // console.log(item);
+                  navigation.push("SchemeDetails", { scheme: item });
+                }}
+              >
+                <SchemeCard img={item.img} />
+              </TouchableOpacity>
+            ))}
+          </View>
+        </ScrollView>
 
-      <View className="px-4 my-4">
-        <AppText className="font-poppins-bold text-xl">
-          My Saving Schemes
-        </AppText>
-        <View className="border-b-4 rounded-xl mt-1 mb-2 border-b-orange-400 w-52 h-0"></View>
-        <View>
-          {!mySchemes ? (
-            <View className="flex items-center  h-24 justify-center">
-              <AppText>Nothing to Show</AppText>
-            </View>
-          ) : null}
+        <View className="px-4 my-4">
+          <AppText className="font-poppins-bold text-xl">My Schemes</AppText>
+          <View className="border-b-4 rounded-xl mt-1 mb-2 border-b-orange-400 w-1/3 h-0"></View>
+          <View>
+            {loading ? (
+              <Loader />
+            ) : !mySchemes || mySchemes.length === 0 ? (
+              <View className="flex items-center  h-24 justify-center">
+                <AppText className="font-poppins-semibold">
+                  Nothing to Show here
+                </AppText>
+                <AppText className="text-sm ">
+                  [Subscribe to a Scheme above 👆 to track]
+                </AppText>
+              </View>
+            ) : (
+              <View>
+                <MySchemeCard mySchemes={mySchemes} />
+              </View>
+            )}
+          </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -94,6 +129,87 @@ const SchemeCard = ({ key, img }: any) => {
       </ImageBackground>
     </View>
   );
+};
+
+const mapper = [
+  ["Amount", "amount"],
+  ["Last Paid Date", "lastPaidDate"],
+  ["Type", "type"],
+  ["Total Paid Dues", "totalPaidDues"],
+
+  ["Next Due On", "nextDueDate"],
+  ["Status", "status"],
+];
+
+export type MySchemeType = {
+  schemeId: string;
+  amount: string;
+  lastPaidDate: string;
+  totalPaidDues: string;
+  nextDueDate: string;
+  status: string;
+  userSchemeId: string;
+  type: string;
+};
+
+export function MySchemeCard(data: any) {
+  const navigation = useNavigation();
+  console.log("Data : ", data);
+  const myData = GetSchemeCardDetails(data.mySchemes);
+
+  return (
+    <ScrollView className="p-4 ">
+      {myData.map((entry, index) => {
+        return (
+          <View key={index} className="mb-5">
+            <View className="flex-1 w-full border border-gray-500 rounded-lg overflow-hidden shadow-md">
+              <SchemeTable entry={entry} />
+              <View className="p-4 w-full bg-white flex flex-row items-center justify-evenly gap-1">
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("MySchemeDetails", { entry })
+                  }
+                  className="w-full bg-blue-500 rounded-md py-4"
+                >
+                  <AppText className=" text-center text-white font-poppins-semibold text-lg">
+                    Details
+                  </AppText>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        );
+      })}
+    </ScrollView>
+  );
+}
+
+const SchemeTable = ({ entry }: any) => {
+  console.log("Entry : ", entry);
+  return mapper.map((item, index) => {
+    return (
+      <View
+        key={index}
+        className={` flex-row ${index % 2 === 0 ? "bg-white" : "bg-gray-50"}`}
+      >
+        {/* Column 1 */}
+        <View className="flex-1 border-b border-gray-100 p-4 justify-center">
+          <AppText className="text-gray-700 font-poppins-semibold">
+            {item[0]}
+          </AppText>
+        </View>
+
+        {/* Column 2 */}
+        <View className="flex-1 border-l border-b  border-gray-100 p-4 justify-center">
+          <AppText
+            className={` text-base ${item[0] === "Status" ? (entry[item[1]] === "Active" ? "text-green-500" : "text-black") : ""}`}
+          >
+            {entry[item[1]]}
+          </AppText>
+        </View>
+      </View>
+    );
+  });
 };
 
 {

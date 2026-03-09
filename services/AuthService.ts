@@ -29,13 +29,16 @@ export const UserLogin = async (requestData: LoginPayload) => {
     const headers = await CreateHeaderWithDeviceId();
     // Attach device details to login
     requestData.device_data = headers;
-    const response = await fetch("http://192.168.68.102:5000/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      `${process.env.EXPO_PUBLIC_BACKEND_URL}/auth/login`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
       },
-      body: JSON.stringify(requestData),
-    });
+    );
 
     const data = await response.json();
 
@@ -54,13 +57,16 @@ export const UserLogin = async (requestData: LoginPayload) => {
 
 export const UserRegister = async (requestData: RegisterPayload) => {
   try {
-    const response = await fetch("http://192.168.68.102:5000/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      `${process.env.EXPO_PUBLIC_BACKEND_URL}/auth/register`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
       },
-      body: JSON.stringify(requestData),
-    });
+    );
 
     const data = await response.json();
 
@@ -80,32 +86,35 @@ export const UserRegister = async (requestData: RegisterPayload) => {
 
 export const refreshAccessToken = async (refresh: string) => {
   try {
-    logger.debug("Called RefereshAccessToke");
+    logger.debug("Called RefereshAccessToken");
     const headers = await CreateHeaderWithDeviceId();
-    logger.debug(headers);
-    logger.debug(refresh);
+    // logger.debug(headers);
+    // logger.debug(refresh);
 
     // Attach device details to login
     const modifiedHeaders = { device_data: headers, refreshToken: refresh };
-    logger.debug(modifiedHeaders);
+    // logger.debug(modifiedHeaders);
     console.log(JSON.stringify(modifiedHeaders));
-    const response = await fetch("http://192.168.68.102:5000/refreshToken", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      `${process.env.EXPO_PUBLIC_BACKEND_URL}/auth/refreshToken`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(modifiedHeaders),
       },
-      body: JSON.stringify(modifiedHeaders),
-    });
+    );
 
-    // const data = await response.json();
-
-    // if (response.ok) {
-    //   return data;
-    // } else {
-    //   // Show error message
-    //   console.log("Refresh Token failed with error : ", data.message);
-    //   return undefined;
-    // }
+    const data = await response.json();
+    console.log("Avi :  ", data);
+    if (response.ok) {
+      return data;
+    } else {
+      // Show error message
+      console.log("Refresh Token failed with error  : ", data.message);
+      return undefined;
+    }
   } catch (error) {
     console.error("Error:", error);
     return error;

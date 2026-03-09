@@ -11,7 +11,7 @@ const DEVICE_ID_KEY = "device_id";
 
 export async function getOrCreateDeviceId(): Promise<string> {
   let deviceId = await SecureStore.getItemAsync(DEVICE_ID_KEY);
-  console.log("DDDD : ", deviceId);
+  // console.log("DDDD : ", deviceId);
   if (!deviceId) {
     deviceId = uuidv4();
     await SecureStore.setItemAsync(DEVICE_ID_KEY, deviceId);
@@ -22,7 +22,7 @@ export async function getOrCreateDeviceId(): Promise<string> {
 
 export async function getDeviceInfo() {
   const deviceId = await getOrCreateDeviceId();
-  logger.debug("HEHEHEHE : " + deviceId);
+  // logger.debug("HEHEHEHE : " + deviceId);
   return {
     deviceId,
     device_name: `${Device.manufacturer} ${Device.modelName}`,

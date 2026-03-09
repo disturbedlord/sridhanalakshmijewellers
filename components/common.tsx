@@ -15,7 +15,7 @@ import { useVideoPlayer, VideoView } from "expo-video";
 import { useEvent } from "expo";
 import { ActivityIndicator } from "react-native";
 
-export const { width, height } = Dimensions.get("window");
+export const { width, height } = Dimensions.get("screen");
 
 type Props = TextProps & {
   className?: string;
@@ -88,6 +88,15 @@ export const Loader = () => {
       <AppText className="text-lg font-semibold text-black">
         Fetching Data from Server
       </AppText>
+    </View>
+  );
+};
+
+export const Spinner = (params) => {
+  return (
+    <View className=" justify-center  flex items-center rounded-lg p-4">
+      {/* Loader */}
+      <ActivityIndicator size="small" color={params.color} />
     </View>
   );
 };

@@ -1,4 +1,8 @@
 import RazorpayCheckout from "react-native-razorpay";
+import { getUserId } from "../context/AuthContext";
+import { SchemeType } from "../components/SchemeComponents/SchemeData";
+import { VerifypaymentType } from "../Types/RazorpayTypes";
+import { logger } from "../utils/logger";
 
 type OrderResponse = {
   id: string;
@@ -18,19 +22,29 @@ export type RazorpayResult = {
   verifyPaymentResponse: any;
 };
 
-export const startPayment = async (amount: number) => {
+export async function startPayment(
+  schemeData: SchemeType,
+  userId: any,
+  isNewSubscription: boolean,
+  installmentId: string | undefined,
+  accessToken: string,
+) {
   try {
-    const res = await fetch("http://192.168.68.102:5000/create-order", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const res = await fetch(
+      `${process.env.EXPO_PUBLIC_BACKEND_URL}/razorpay/create-order`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({ amount: schemeData.price_per_month }),
       },
-      body: JSON.stringify({ amount: amount }),
-    });
+    );
 
     const order: OrderResponse = await res.json();
     // console.log("Avinash  Kumar : ", process.env.EXPO_PUBLIC_RAZORPAY_KEY_ID);
-    // console.log("Avinash  Kumar : ", order);
+    console.log("Avinash  Kumar : ", order);
     const options = {
       key: process.env.EXPO_PUBLIC_RAZORPAY_KEY_ID,
       amount: order.amount,
@@ -48,7 +62,14 @@ export const startPayment = async (amount: number) => {
       if (data) {
         console.log("Payment success:", data);
 
-        const paymentVerification = await verifyPayment(data);
+        const paymentVerification = await verifyPayment(
+          data,
+          schemeData,
+          userId,
+          isNewSubscription,
+          installmentId,
+          accessToken,
+        );
         console.log(paymentVerification);
 
         const result: RazorpayResult = {
@@ -80,25 +101,46 @@ export const startPayment = async (amount: number) => {
 
     return errorResult;
   }
-};
+}
 
-const verifyPayment = async (payment: {
-  razorpay_payment_id: string;
-  razorpay_order_id: string;
-  razorpay_signature: string;
-}) => {
+const verifyPayment = async (
+  payment: {
+    razorpay_payment_id: string;
+    razorpay_order_id: string;
+    razorpay_signature: string;
+  },
+  schemeData: SchemeType,
+  userId: string,
+  isNewSubscription: boolean,
+  installment_id: string,
+  accessToken: string,
+) => {
   try {
-    const res = await fetch("http://192.168.68.102:5000/verify-payment", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const body: VerifypaymentType = {
+      payment: payment,
+      isNewSubscription: isNewSubscription,
+      schemeData: schemeData,
+      userId: userId,
+      installmentId: installment_id,
+    };
+
+    logger.debug("VerifyPayment Body : ", body, accessToken);
+    const res = await fetch(
+      `${process.env.EXPO_PUBLIC_BACKEND_URL}/razorpay/verify-payment`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify(body),
       },
-      body: JSON.stringify(payment),
-    });
+    );
 
     const result = await res.json();
 
     console.log("Verification result:", result);
+
     return result;
   } catch (err) {
     console.log(err);

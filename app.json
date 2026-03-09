@@ -22,10 +22,7 @@
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "permissions": [
-        "RECORD_AUDIO",
-        "RECORD_AUDIO"
-      ],
+      "permissions": ["RECORD_AUDIO", "RECORD_AUDIO"],
       "package": "com.avinash_kumar.dljs"
     },
     "web": {
@@ -33,6 +30,7 @@
       "bundler": "metro"
     },
     "plugins": [
+      "expo-build-properties",
       "expo-font",
       [
         "expo-video",
@@ -42,6 +40,11 @@
         }
       ],
       "expo-secure-store"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "eef752a3-c0ae-4ea0-8b48-530aeb9c8281"
+      }
+    }
   }
 }

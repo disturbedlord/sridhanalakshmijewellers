@@ -10,6 +10,7 @@ export default function CustomDrawerContent(props: any) {
 
   const { user, logout } = useAuth();
   console.log(user);
+  // console.log(user);
   const handleLogout = () => {
     // Add your logout logic here
     console.log("Logging out...");
@@ -27,7 +28,10 @@ export default function CustomDrawerContent(props: any) {
         <AppText className="font-poppins-bold text-2xl">
           Hi {user?.name},
         </AppText>
-        <AppText className="font-poppins text-base">{user?.user}</AppText>
+        <AppText className="font-poppins text-base">
+          <AppText className="font-poppins-semibold">Mobile : </AppText>
+          {user?.userMobileNo}
+        </AppText>
 
         {/* Line Break */}
         <View
@@ -37,7 +41,7 @@ export default function CustomDrawerContent(props: any) {
         {/* Drawer Items / Tabs */}
         <DrawerItem
           labelStyle={{
-            fontFamily: "Poppins_600SemiBold",
+            fontFamily: "Poppins_600Regular",
             color: "black",
             fontSize: 16,
           }}
@@ -49,20 +53,10 @@ export default function CustomDrawerContent(props: any) {
             color: "black",
             fontSize: 16,
 
-            fontFamily: "Poppins_600SemiBold",
+            fontFamily: "Poppins_600Regular",
           }}
           label="Saving Schemes"
           onPress={() => navigation.navigate("SavingSchemes")}
-        />
-        <DrawerItem
-          labelStyle={{
-            color: "black",
-            fontSize: 16,
-
-            fontFamily: "Poppins_600SemiBold",
-          }}
-          label="Payment History"
-          onPress={() => navigation.navigate("Settings")}
         />
       </DrawerContentScrollView>
 

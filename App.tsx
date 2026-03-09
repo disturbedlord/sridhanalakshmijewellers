@@ -86,6 +86,9 @@ export default function App() {
         <SafeAreaView style={{ flex: 1 }}>
           <AuthProvider>
             <MainApp />
+            {/* <View>
+              <AppText>Hi</AppText>
+            </View> */}
           </AuthProvider>
         </SafeAreaView>
       </SafeAreaProvider>
@@ -101,7 +104,7 @@ function MainApp() {
     const initDevice = async () => {
       try {
         const deviceId = await getOrCreateDeviceId();
-        logger.debug("Device Id : " + deviceId);
+        // logger.debug("Device Id : " + deviceId);
       } catch (error) {
         console.error("Device ID generation failed", error);
       } finally {
@@ -123,6 +126,7 @@ function MainApp() {
     const refresh = await SecureStore.getItemAsync("refreshToken");
     const name = await SecureStore.getItemAsync("userName");
     const userMobileNo = await SecureStore.getItemAsync("userMobileNo");
+    const userId = await SecureStore.getItemAsync("userId");
     console.log(access, refresh, name, userMobileNo);
     setUser({
       user: userMobileNo,
@@ -130,6 +134,7 @@ function MainApp() {
       message: "",
       accessToken: access,
       refreshToken: refresh,
+      userId: userId,
     });
     if (!access || !refresh || !name || !userMobileNo) {
       clearSecureStore();
@@ -140,20 +145,23 @@ function MainApp() {
 
     const decoded = jwtDecode<TokenPayload>(access);
     const now = Date.now() / 1000;
-
+    console.log(decoded.exp > now);
     if (decoded.exp > now) {
       setInitialRoute("Home");
     } else {
       const refreshed = await refreshAccessToken(refresh);
-      setInitialRoute(refreshed ? "Home" : "Auth");
+      const nextRoute = refreshed !== undefined ? "Home" : "Auth";
+      console.log("HI : ", refreshed, nextRoute);
+
+      setInitialRoute(nextRoute);
     }
   };
 
   if (!initialRoute) return null;
-
+  console.log("2 : ", initialRoute);
   return (
     <NavigationContainer>
-      <DrawerNavigator />
+      <DrawerNavigator initialRoute={initialRoute} />
     </NavigationContainer>
   );
 }
