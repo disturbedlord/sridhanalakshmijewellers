@@ -20,7 +20,6 @@
     "expo": "~55.0.4",
     "expo-application": "~55.0.8",
     "expo-build-properties": "~55.0.9",
-    "expo-dev-client": "~55.0.11",
     "expo-device": "~55.0.9",
     "expo-font": "~55.0.4",
     "expo-secure-store": "~55.0.8",

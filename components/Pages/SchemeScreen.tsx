@@ -7,7 +7,7 @@ import {
   View,
 } from "react-native";
 import { AppText, Img, Loader, width } from "../common";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Text, FlatList, StyleSheet } from "react-native";
 import { HomeScreenNavigationProp } from "../../App";
 import {
@@ -37,6 +37,8 @@ type SchemeListNavigationProp = NativeStackNavigationProp<
 export default function SchemeScreen({ navigation, route }) {
   // const navigation = useNavigation<SchemeListNavigationProp>();
   const [mySchemes, setMySchemes] = useState(undefined);
+  const scrollRef = useRef(null);
+
   const userId = getUserId();
   const [loading, setLoading] = useState(true);
   const userAccessToken = getAccessToken();
@@ -56,12 +58,14 @@ export default function SchemeScreen({ navigation, route }) {
 
   useFocusEffect(
     useCallback(() => {
+      scrollRef.current?.scrollTo({ y: 0, animated: false });
+
       GetUserSchemes();
     }, []),
   );
 
   return (
-    <ScrollView className="flex-1 bg-white">
+    <ScrollView className="flex-1 bg-white" ref={scrollRef}>
       <View className="  py-4">
         <View className="px-4 flex  mb-2">
           <AppText className="text-xl font-poppins-bold text-gray-800 mt-2">
