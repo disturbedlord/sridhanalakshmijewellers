@@ -1,0 +1,11 @@
+\connect --mysql -h 127.0.0.1 -P 3306 -u root -p
+
+password : rootpassword
+
+TiDB : 
+password : y8vw7WBD2WWiTzJI
+Host : gateway01.ap-southeast-1.prod.aws.tidbcloud.com
+Post : 4000
+userName  :4JrnMtTzLHcYByF.root
+password : y8vw7WBD2WWiTzJI
+database : dljs
