@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import pool from "../db.js";
+import { logger } from "../pinoLogger.js";
 
 export const GetAllSchemes = async (req, res) => {
   try {
@@ -43,4 +44,12 @@ export const Middleware = (req, res, next) => {
   } catch (err) {
     return res.status(401).json({ error: "Invalid token" });
   }
+};
+
+let visitors = 0;
+export const RegisterVisitors = (req, res) => {
+  logger.info("Visitor Hi");
+
+  visitors++;
+  res.status(204).json("Hi Visitor");
 };

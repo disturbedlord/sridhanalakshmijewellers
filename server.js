@@ -17,7 +17,12 @@ import {
   generateRefreshToken,
 } from "./app/common/utils.js";
 import { Login, RefreshToken, Register } from "./app/AuthRoute.js";
-import { GetAllSchemes, GetMetalPrice, Middleware } from "./app/commonRoute.js";
+import {
+  GetAllSchemes,
+  GetMetalPrice,
+  Middleware,
+  RegisterVisitors,
+} from "./app/commonRoute.js";
 import {
   GetAllInstallmentsHistory,
   GetAllUserSchemes,
@@ -63,6 +68,9 @@ app.post(
   Middleware,
   GetAllInstallmentsHistory,
 );
+
+// Dummy Route to keep render always on
+app.get("/common/visitors", RegisterVisitors);
 
 // Start the server
 const port = process.env.PORT || 5000;
