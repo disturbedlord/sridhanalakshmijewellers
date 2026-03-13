@@ -29,6 +29,7 @@ import {
   GetUserScheme,
 } from "./app/common/Schemes.js";
 import { logger } from "./pinoLogger.js";
+import { GetAllProducts } from "./app/ShopRoute.js";
 
 // Load environment variables
 dotenv.config();
@@ -36,7 +37,7 @@ dotenv.config();
 const app = express();
 app.use(express.json()); // Parse JSON request bodies
 app.use(cors()); // Allow all domains to make requests (you can restrict it later)
-
+app.use("/assets", express.static("assets"));
 // Register a new user
 app.post("/auth/register", Register);
 
@@ -71,6 +72,8 @@ app.post(
 
 // Dummy Route to keep render always on
 app.get("/common/visitors", RegisterVisitors);
+
+app.get("/shop/getProducts", Middleware, GetAllProducts);
 
 // Start the server
 const port = process.env.PORT || 5000;
