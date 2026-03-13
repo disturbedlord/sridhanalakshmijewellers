@@ -10,6 +10,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MySchemeDetails from "../components/Pages/MySchemeDetails";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import Navbar from "../components/HomeComponents/Navbar";
+import ShopScreen from "../components/Pages/ShopScreen";
+import ProductScreen from "../components/Pages/ProductScreen";
+import CartScreen from "../components/Pages/CartScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -17,6 +20,7 @@ export default function DrawerNavigator({ initialRoute }: any) {
   return (
     <Drawer.Navigator
       screenOptions={{
+        swipeEnabled: false,
         headerShown: false,
         drawerStyle: {
           borderTopRightRadius: 0,
@@ -68,6 +72,21 @@ function SchemeStack({ route, navigation }: any) {
         options={{ header: () => <Navbar /> }}
         name="MySchemeDetails"
         component={MySchemeDetails}
+      />
+      <Stack.Screen
+        options={{ header: () => <Navbar /> }}
+        name="ShopScreen"
+        component={ShopScreen}
+      />
+      <Stack.Screen
+        options={{ header: () => <Navbar /> }}
+        name="ProductScreen"
+        component={ProductScreen}
+      />
+      <Stack.Screen
+        options={{ header: () => <Navbar /> }}
+        name="CartScreen"
+        component={CartScreen}
       />
     </Stack.Navigator>
   );

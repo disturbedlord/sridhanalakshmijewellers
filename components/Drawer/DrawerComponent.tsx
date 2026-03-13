@@ -58,6 +58,16 @@ export default function CustomDrawerContent(props: any) {
           label="Saving Schemes"
           onPress={() => navigation.navigate("SavingSchemes")}
         />
+        <DrawerItem
+          labelStyle={{
+            color: "black",
+            fontSize: 16,
+
+            fontFamily: "Poppins_600Regular",
+          }}
+          label="Shop"
+          onPress={() => navigation.navigate("ShopScreen")}
+        />
       </DrawerContentScrollView>
 
       {/* Logout Button at bottom */}

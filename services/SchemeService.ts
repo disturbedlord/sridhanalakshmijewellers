@@ -1,3 +1,4 @@
+import { BackendAPI } from "../components/common";
 import { MySchemeCard, MySchemeType } from "../components/Pages/SchemeScreen";
 import {
   getSchemeData,
@@ -13,7 +14,7 @@ export const GetAllUserSchemes = async (
     if (!userId) return { status: 0, rows: [] };
 
     const response = await fetch(
-      `${process.env.EXPO_PUBLIC_BACKEND_URL}/user/schemes/getAllUserSchemes`,
+      `${BackendAPI}/user/schemes/getAllUserSchemes`,
       {
         method: "POST",
         headers: {
@@ -46,7 +47,7 @@ export const GetAllInstallments = async (
     if (!schemeId || !accessToken) return undefined;
 
     const response = await fetch(
-      `${process.env.EXPO_PUBLIC_BACKEND_URL}/user/schemes/getAllUserInstallments`,
+      `${BackendAPI}/user/schemes/getAllUserInstallments`,
       {
         method: "POST",
         headers: {

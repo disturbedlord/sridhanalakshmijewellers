@@ -1,16 +1,15 @@
+import { BackendAPI } from "../components/common";
+
 export async function GetAllSchemes(accessToken: string | undefined) {
   if (!accessToken) return undefined;
   try {
-    const response = await fetch(
-      `${process.env.EXPO_PUBLIC_BACKEND_URL}/common/schemes`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
+    const response = await fetch(`${BackendAPI}/common/schemes`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
-    );
+    });
 
     const data = await response.json();
 
@@ -31,16 +30,13 @@ export async function GetAllSchemes(accessToken: string | undefined) {
 export async function GetLatestPrice(accessToken: string | undefined) {
   if (!accessToken) return undefined;
   try {
-    const response = await fetch(
-      `${process.env.EXPO_PUBLIC_BACKEND_URL}/common/getMetalPrice`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
+    const response = await fetch(`${BackendAPI}/common/getMetalPrice`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
-    );
+    });
 
     const data = await response.json();
 

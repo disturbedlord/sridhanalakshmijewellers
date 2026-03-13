@@ -7,6 +7,10 @@ import silverCoin from "../../assets/images/silvercoin.jpeg";
 import React, { memo } from "react";
 import { GetLatestPrice } from "../../services/DashboardService";
 import { getAccessToken } from "../../context/AuthContext";
+import { EvilIcons } from "@expo/vector-icons";
+import App from "../../App";
+import { CartContext, useCart } from "../../context/CartContext";
+import { useNavigation } from "@react-navigation/native";
 const options = [
   { name: "GOLD 24 KT/1g", technicalName: "gold24k", img: goldCoin },
   { name: "GOLD 22 KT/1g", technicalName: "gold22k", img: goldCoin },
@@ -15,12 +19,12 @@ const options = [
 ];
 
 export default function PriceTicker() {
+  const navigation = useNavigation();
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(options.at(0));
-
+  const { cart } = useCart();
   const toggleOpen = useCallback(() => {
     setOpen((prev) => !prev);
-    // console.log("clicked");
   }, []);
 
   const userAccessToken = getAccessToken();
@@ -31,52 +35,59 @@ export default function PriceTicker() {
     setLoading(true);
     const price = await GetLatestPrice(userAccessToken);
     if (price?.latestPrice) {
-      console.log("LOG : ", price.latestPrice[0]);
       setMetalPrice(price.latestPrice[0]);
       setLoading(false);
     }
   };
   useEffect(() => {
     getLatestMetalPrice();
-    console.log(metalPrice);
   }, []);
   return (
-    <View className="relative">
-      {/* Trigger */}
-      <TouchableOpacity
-        onPress={toggleOpen}
-        className="px-4 py-1 text-gray-800 font-semibold rounded-md"
-      >
-        <View className="flex flex-row items-center gap-2 text-[#681016] bg-[#FEF7F7] ">
-          <Img src={goldCoin} className="w-[20px] h-[20px]" />
-          <AppText className="text-[#681016] font-medium font-poppins ">
-            {loading &&
-            metalPrice &&
-            metalPrice[selected?.technicalName] !== undefined
-              ? "Loading ..."
-              : `${selected?.name} - ₹${metalPrice && metalPrice[selected?.technicalName]}`}
-          </AppText>
-          <View style={{ transform: [{ rotate: open ? "180deg" : "0deg" }] }}>
-            <Svg
-              width={16}
-              height={16}
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <Path
-                d="M19 9l-7 7-7-7"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </Svg>
+    <View className="flex flex-row w-full items-center justify-between">
+      <View>
+        {/* Trigger */}
+        <TouchableOpacity
+          onPress={toggleOpen}
+          className="px-4 py-1 text-gray-800 font-semibold rounded-md"
+        >
+          <View className="flex flex-row items-center gap-2 text-[#681016] bg-[#FEF7F7] ">
+            <Img src={goldCoin} className="w-[20px] h-[20px]" />
+            <AppText className="text-[#681016] font-medium font-poppins ">
+              {loading &&
+              metalPrice &&
+              metalPrice[selected?.technicalName] !== undefined
+                ? "Loading ..."
+                : `${selected?.name} - ₹${metalPrice && metalPrice[selected?.technicalName]}`}
+            </AppText>
+            <View style={{ transform: [{ rotate: open ? "180deg" : "0deg" }] }}>
+              <Svg
+                width={16}
+                height={16}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <Path
+                  d="M19 9l-7 7-7-7"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </Svg>
+            </View>
           </View>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
 
-      {/* Dropdown */}
-      {open && metalPrice && <DropdownItems price={metalPrice} />}
+        {/* Dropdown */}
+        {open && metalPrice && <DropdownItems price={metalPrice} />}
+      </View>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("CartScreen")}
+        className="mx-4 flex flex-row "
+      >
+        <EvilIcons name="cart" size={24} color="#681016" />
+        <AppText className="text-[#681016]">[{cart.length}]</AppText>
+      </TouchableOpacity>
     </View>
   );
 }

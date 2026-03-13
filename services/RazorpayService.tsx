@@ -3,6 +3,7 @@ import { getUserId } from "../context/AuthContext";
 import { SchemeType } from "../components/SchemeComponents/SchemeData";
 import { VerifypaymentType } from "../Types/RazorpayTypes";
 import { logger } from "../utils/logger";
+import { BackendAPI } from "../components/common";
 
 type OrderResponse = {
   id: string;
@@ -30,17 +31,14 @@ export async function startPayment(
   accessToken: string,
 ) {
   try {
-    const res = await fetch(
-      `${process.env.EXPO_PUBLIC_BACKEND_URL}/razorpay/create-order`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify({ amount: schemeData.price_per_month }),
+    const res = await fetch(`${BackendAPI}/razorpay/create-order`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
-    );
+      body: JSON.stringify({ amount: schemeData.price_per_month }),
+    });
 
     const order: OrderResponse = await res.json();
     // console.log("Avinash  Kumar : ", process.env.EXPO_PUBLIC_RAZORPAY_KEY_ID);
@@ -125,17 +123,14 @@ const verifyPayment = async (
     };
 
     logger.debug("VerifyPayment Body : ", body, accessToken);
-    const res = await fetch(
-      `${process.env.EXPO_PUBLIC_BACKEND_URL}/razorpay/verify-payment`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify(body),
+    const res = await fetch(`${BackendAPI}/razorpay/verify-payment`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
-    );
+      body: JSON.stringify(body),
+    });
 
     const result = await res.json();
 

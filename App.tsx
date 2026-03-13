@@ -16,7 +16,7 @@ import {
   Poppins_600SemiBold,
 } from "@expo-google-fonts/poppins";
 import Home from "./components/Pages/HomePage";
-import { AppText, Loader } from "./components/common";
+import { AppText, BackendAPI, Loader, Spinner } from "./components/common";
 import { FontAwesome } from "@expo/vector-icons";
 import HomeScreen from "./components/Pages/HomePage";
 import {
@@ -39,6 +39,7 @@ import * as SecureStore from "expo-secure-store";
 import { jwtDecode } from "jwt-decode";
 import DrawerNavigator from "./layout/DrawerLayout";
 import { clearSecureStore } from "./services/SecureStoreService";
+import { CartContext, CartProvider } from "./context/CartContext";
 
 SplashScreen.preventAutoHideAsync();
 type TokenPayload = {
@@ -69,11 +70,29 @@ export default function App() {
     Poppins_700Bold,
     Poppins_600SemiBold,
   });
+  const [BackendActive, setBackendActive] = useState(false);
+  const WakeUpBackend = async () => {
+    logger.debug("BackendAPI : ", BackendAPI);
+    logger.debug("BackendAPI : ", BackendAPI);
+    const response = await fetch(`${BackendAPI}/common/visitors`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.status;
+    logger.debug("Wake Up Called : ", data);
+    if (data) {
+      setBackendActive(true);
+    }
+  };
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
       await SplashScreen.hideAsync();
     }
+    WakeUpBackend();
   }, [fontsLoaded]);
 
   if (!fontsLoaded) {
@@ -84,12 +103,21 @@ export default function App() {
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <SafeAreaProvider>
         <SafeAreaView style={{ flex: 1 }}>
-          <AuthProvider>
-            <MainApp />
-            {/* <View>
+          {!BackendActive ? (
+            <View className="flex items-center justify-center">
+              <Spinner />
+              <AppText>Waiting for backend to wake up !!!</AppText>
+            </View>
+          ) : (
+            <CartProvider>
+              <AuthProvider>
+                <MainApp />
+                {/* <View>
               <AppText>Hi</AppText>
             </View> */}
-          </AuthProvider>
+              </AuthProvider>
+            </CartProvider>
+          )}
         </SafeAreaView>
       </SafeAreaProvider>
     </View>

@@ -14,6 +14,7 @@ import React, { memo } from "react";
 import { useVideoPlayer, VideoView } from "expo-video";
 import { useEvent } from "expo";
 import { ActivityIndicator } from "react-native";
+import { Float } from "react-native/Libraries/Types/CodegenTypes";
 
 export const { width, height } = Dimensions.get("screen");
 
@@ -117,3 +118,19 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 });
+
+export const BackendAPI =
+  process.env.EXPO_PUBLIC_ENVIRONMENT === "dev"
+    ? process.env.EXPO_PUBLIC_BACKEND_DEV_URL
+    : process.env.EXPO_PUBLIC_BACKEND_URL;
+
+export const PriceView = ({
+  price,
+  className,
+}: {
+  price: Float;
+  className: string;
+}) => {
+  const formatted = new Intl.NumberFormat("en-IN").format(price);
+  return <AppText className={className}>₹ {formatted}</AppText>;
+};

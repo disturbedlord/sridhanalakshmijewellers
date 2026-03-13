@@ -1,3 +1,4 @@
+import { BackendAPI } from "../components/common";
 import { logger } from "../utils/logger";
 import { getDeviceInfo } from "./ClientSideService";
 
@@ -29,16 +30,13 @@ export const UserLogin = async (requestData: LoginPayload) => {
     const headers = await CreateHeaderWithDeviceId();
     // Attach device details to login
     requestData.device_data = headers;
-    const response = await fetch(
-      `${process.env.EXPO_PUBLIC_BACKEND_URL}/auth/login`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestData),
+    const response = await fetch(`${BackendAPI}/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+      body: JSON.stringify(requestData),
+    });
 
     const data = await response.json();
 
@@ -57,16 +55,13 @@ export const UserLogin = async (requestData: LoginPayload) => {
 
 export const UserRegister = async (requestData: RegisterPayload) => {
   try {
-    const response = await fetch(
-      `${process.env.EXPO_PUBLIC_BACKEND_URL}/auth/register`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestData),
+    const response = await fetch(`${BackendAPI}/auth/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+      body: JSON.stringify(requestData),
+    });
 
     const data = await response.json();
 
@@ -95,16 +90,13 @@ export const refreshAccessToken = async (refresh: string) => {
     const modifiedHeaders = { device_data: headers, refreshToken: refresh };
     // logger.debug(modifiedHeaders);
     console.log(JSON.stringify(modifiedHeaders));
-    const response = await fetch(
-      `${process.env.EXPO_PUBLIC_BACKEND_URL}/auth/refreshToken`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(modifiedHeaders),
+    const response = await fetch(`${BackendAPI}/auth/refreshToken`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+      body: JSON.stringify(modifiedHeaders),
+    });
 
     const data = await response.json();
     console.log("Avi :  ", data);
