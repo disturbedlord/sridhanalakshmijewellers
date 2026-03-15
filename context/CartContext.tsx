@@ -36,7 +36,24 @@ export const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = (id) => {
+    let items = [...cart];
+
+    const index = items.findIndex((p) => p.id === id);
+
+    if (index >= 0) {
+      items[index].qty -= 1;
+      if (items[index].qty <= 0) {
+        console.log("Deleting from cart : id : ", id);
+        deleteFromCart(id);
+      } else {
+        saveCart(items);
+      }
+    }
+  };
+  const deleteFromCart = (id) => {
+    console.log("DELETE : ", id);
     const items = cart.filter((p) => p.id !== id);
+    // console.log(items);
     saveCart(items);
   };
 
@@ -46,7 +63,7 @@ export const CartProvider = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, clearCart }}
+      value={{ cart, addToCart, removeFromCart, clearCart, deleteFromCart }}
     >
       {children}
     </CartContext.Provider>

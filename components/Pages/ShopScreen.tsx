@@ -66,7 +66,7 @@ export default function ShopScreen({ navigation }: any) {
 
   return (
     <View className="flex-1 p-2 bg-neutral-100">
-      <View>
+      <View className="h-[20%]">
         {/* Filters */}
         <AppText className="text-sm px-4 font-poppins-bold">Category</AppText>
         <FiltersComponent
@@ -80,8 +80,8 @@ export default function ShopScreen({ navigation }: any) {
       {productLoading ? (
         <Spinner />
       ) : (
-        <View>
-          <AppText className="text-sm px-4 font-poppins-bold text-[#80808080]">
+        <View className="h-[80%]">
+          <AppText className="text-sm px-4 font-poppins-bold text-black">
             {filteredProducts?.length} items
           </AppText>
 
@@ -94,7 +94,7 @@ export default function ShopScreen({ navigation }: any) {
             renderItem={({ item }) => (
               <TouchableOpacity
                 onPress={() =>
-                  navigation.navigate("ProductScreen", { product: item })
+                  navigation.navigate("ProductScreen", { productId: item.id })
                 }
                 className="bg-white rounded-xl mb-5 w-[48%] overflow-hidden"
               >

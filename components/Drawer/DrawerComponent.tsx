@@ -9,7 +9,7 @@ export default function CustomDrawerContent(props: any) {
   const navigation = useNavigation();
 
   const { user, logout } = useAuth();
-  console.log(user);
+  // console.log(user);
   // console.log(user);
   const handleLogout = () => {
     // Add your logout logic here

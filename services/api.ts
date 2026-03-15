@@ -1,48 +1,96 @@
-// import axios from "axios";
-// import * as SecureStore from "expo-secure-store";
+import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
+import * as SecureStore from "expo-secure-store";
+import { BackendAPI } from "../components/common";
 
-// const api = axios.create({
-//   baseURL: "https://api.example.com",
-// });
+const api = axios.create({
+  baseURL: BackendAPI,
+});
 
-// // Request interceptor to add access token
-// api.interceptors.request.use(async (config) => {
-//   const token = await SecureStore.getItemAsync("accessToken");
-//   if (token) config.headers.Authorization = `Bearer ${token}`;
-//   return config;
-// });
+/* REQUEST INTERCEPTOR */
 
-// // Response interceptor to handle 401 (token expired)
-// api.interceptors.response.use(
-//   (response) => response,
-//   async (error) => {
-//     const originalRequest = error.config;
+api.interceptors.request.use(
+  async (config: InternalAxiosRequestConfig) => {
+    const token = await SecureStore.getItemAsync("accessToken");
 
-//     // If 401 and not already retried
-//     if (error.response?.status === 401 && !originalRequest._retry) {
-//       originalRequest._retry = true;
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
 
-//       // Get refresh token
-//       const refreshToken = await SecureStore.getItemAsync("refreshToken");
-//       if (!refreshToken) throw error;
+    return config;
+  },
+  (error: AxiosError) => Promise.reject(error),
+);
 
-//       // Call refresh token endpoint
-//       const res = await axios.post("https://api.example.com/refresh-token", {
-//         refreshToken,
-//       });
+/* ---------------- RESPONSE INTERCEPTOR ---------------- */
 
-//       if (res.status === 200) {
-//         // Save new access token
-//         await SecureStore.setItemAsync("accessToken", res.data.accessToken);
+api.interceptors.response.use(
+  (response) => response,
+  async (error: AxiosError<any>) => {
+    const originalRequest: any = error.config;
 
-//         // Retry original request
-//         originalRequest.headers.Authorization = `Bearer ${res.data.accessToken}`;
-//         return api(originalRequest);
-//       }
-//     }
+    if (error.response?.status === 401 && !originalRequest?._retry) {
+      originalRequest._retry = true;
 
-//     throw error;
-//   }
-// );
+      const refreshToken = await SecureStore.getItemAsync("refreshToken");
+      if (!refreshToken) return Promise.reject(error);
 
-// export default api;
+      try {
+        const res = await axios.post(`${BackendAPI}/refresh-token`, {
+          refreshToken,
+        });
+
+        const newAccessToken = res.data.accessToken;
+
+        await SecureStore.setItemAsync("accessToken", newAccessToken);
+
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+
+        return api(originalRequest);
+      } catch (err) {
+        return Promise.reject(err);
+      }
+    }
+
+    return Promise.reject(error);
+  },
+);
+
+/* ---------------- GENERIC API METHODS ---------------- */
+
+export const getRequest = async <T>(url: string, params?: any): Promise<T> => {
+  try {
+    const res = await api.get<T>(url, { params });
+    return res.data;
+  } catch (error: any) {
+    throw error.response?.data || error;
+  }
+};
+
+export const postRequest = async <T>(url: string, data?: any): Promise<T> => {
+  try {
+    const res = await api.post<T>(url, data);
+    return res.data;
+  } catch (error: any) {
+    throw error.response?.data || error;
+  }
+};
+
+export const putRequest = async <T>(url: string, data?: any): Promise<T> => {
+  try {
+    const res = await api.put<T>(url, data);
+    return res.data;
+  } catch (error: any) {
+    throw error.response?.data || error;
+  }
+};
+
+export const deleteRequest = async <T>(url: string): Promise<T> => {
+  try {
+    const res = await api.delete<T>(url);
+    return res.data;
+  } catch (error: any) {
+    throw error.response?.data || error;
+  }
+};
+
+export default api;

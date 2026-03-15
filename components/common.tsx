@@ -98,6 +98,7 @@ export const Spinner = (params) => {
     <View className=" justify-center  flex items-center rounded-lg p-4">
       {/* Loader */}
       <ActivityIndicator size="small" color={params.color} />
+      {params.text !== "" ? <AppText>{params.text}</AppText> : null}
     </View>
   );
 };

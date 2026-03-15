@@ -8,6 +8,8 @@ import {
   ScrollView,
   Linking,
 } from "react-native";
+import Toast from "react-native-toast-message";
+
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import {
   useFonts,
@@ -38,7 +40,7 @@ import * as SplashScreen from "expo-splash-screen";
 import * as SecureStore from "expo-secure-store";
 import { jwtDecode } from "jwt-decode";
 import DrawerNavigator from "./layout/DrawerLayout";
-import { clearSecureStore } from "./services/SecureStoreService";
+import { clearSecureStore, GetCartId } from "./services/SecureStoreService";
 import { CartContext, CartProvider } from "./context/CartContext";
 
 SplashScreen.preventAutoHideAsync();
@@ -112,6 +114,8 @@ export default function App() {
             <CartProvider>
               <AuthProvider>
                 <MainApp />
+                <Toast />
+
                 {/* <View>
               <AppText>Hi</AppText>
             </View> */}
@@ -155,7 +159,7 @@ function MainApp() {
     const name = await SecureStore.getItemAsync("userName");
     const userMobileNo = await SecureStore.getItemAsync("userMobileNo");
     const userId = await SecureStore.getItemAsync("userId");
-    console.log(access, refresh, name, userMobileNo);
+    logger.debug(access, refresh, name, userMobileNo);
     setUser({
       user: userMobileNo,
       name: name,
