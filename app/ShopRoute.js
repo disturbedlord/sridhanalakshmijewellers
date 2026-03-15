@@ -14,7 +14,7 @@ export const GetAllProducts = async (req, res) => {
     }
 
     const getProducts =
-      "SELECT sku , name , image , price , category FROM products where is_active = 1 and stock_quantity > 0;";
+      "SELECT id , sku , name , image , price , category FROM products where is_active = 1 and stock_quantity > 0;";
     const [getProductsResult] = await pool.query(getProducts, []);
     if (getProductsResult?.length > 0) {
       response.products = getProductsResult;

@@ -2,7 +2,7 @@ import {
   formatString,
   scheme_installment_insert,
   user_schemes_insert,
-} from "../../queries.js";
+} from "../../DBHelper/queries.js";
 import pool from "../../db.js";
 import { v4 as uuidv4 } from "uuid";
 import { stat } from "fs";

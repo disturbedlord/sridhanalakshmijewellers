@@ -5,7 +5,6 @@ import jwt from "jsonwebtoken";
 import cors from "cors";
 import dotenv from "dotenv";
 import pool from "./db.js";
-import { formatString, user_devices_insert } from "./queries.js";
 import { v4 as uuidv4 } from "uuid";
 import {
   CreateRazorpayOrder,
@@ -30,6 +29,11 @@ import {
 } from "./app/common/Schemes.js";
 import { logger } from "./pinoLogger.js";
 import { GetAllProducts } from "./app/ShopRoute.js";
+import {
+  AddItemToCart,
+  CreateCart,
+  GetProductDetails,
+} from "./app/ProductRoute.js";
 
 // Load environment variables
 dotenv.config();
@@ -74,6 +78,9 @@ app.post(
 app.get("/common/visitors", RegisterVisitors);
 
 app.get("/shop/getProducts", Middleware, GetAllProducts);
+app.post("/product/getProductDetail", Middleware, GetProductDetails);
+app.post("/cart/createCart", Middleware, CreateCart);
+app.post("/cart/addToCart", Middleware, AddItemToCart);
 
 // Start the server
 const port = process.env.PORT || 5000;

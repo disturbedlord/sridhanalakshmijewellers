@@ -2,7 +2,7 @@ import Razorpay from "razorpay";
 import dotenv from "dotenv";
 import crypto from "crypto";
 import pool from "../db.js";
-import { razorpay_create_order } from "../queries.js";
+import { razorpay_create_order } from "../DBHelper/queries.js";
 import { v4 as uuidv4 } from "uuid";
 import {
   CreateSchemeSubscription,

@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import pool from "../db.js";
 import { generateAccessToken, generateRefreshToken } from "./common/utils.js";
-import { user_devices_insert } from "../queries.js";
+import { user_devices_insert } from "../DBHelper/queries.js";
 import { logger } from "../pinoLogger.js";
 
 export const Register = async (req, res) => {

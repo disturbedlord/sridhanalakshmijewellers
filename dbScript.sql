@@ -144,3 +144,97 @@ CREATE TABLE metalPrice (
 );
 
 -- INSERT INTO metalPrice VALUES(UUID() , "16600" , "13020" , "15210","296" , NOW())
+
+CREATE TABLE categories (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL UNIQUE,
+  description TEXT,
+  image VARCHAR(255),
+  is_active TINYINT(1) NOT NULL DEFAULT 1,
+  created_date DATE NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE products (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  sku VARCHAR(50) NOT NULL UNIQUE,
+  name VARCHAR(255) NOT NULL,
+  category VARCHAR(100) NOT NULL,
+  description TEXT NOT NULL,
+  price DECIMAL(10,2) NOT NULL,
+  weight_grams DECIMAL(6,2) NOT NULL,
+  purity VARCHAR(100) NOT NULL DEFAULT '925 Sterling Silver',
+  image VARCHAR(255) NOT NULL,
+  is_active TINYINT(1) NOT NULL DEFAULT 1,
+  stock_quantity INT NOT NULL DEFAULT 0,
+  created_date DATE NOT NULL,
+  category_id INT,
+  FOREIGN KEY (category_id) REFERENCES categories(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE orders (
+  order_id CHAR(36) PRIMARY KEY,
+
+  user_id CHAR(36) NOT NULL,
+
+  total_amount DECIMAL(10,2) NOT NULL,
+
+  status ENUM(
+    'pending',
+    'paid',
+    'processing',
+    'shipped',
+    'delivered',
+    'cancelled'
+  ) DEFAULT 'pending',
+
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+  FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE order_items (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+
+  order_id CHAR(36) NOT NULL,
+  product_id INT NOT NULL,
+
+  quantity INT NOT NULL DEFAULT 1,
+
+  price DECIMAL(10,2) NOT NULL,
+
+  FOREIGN KEY (order_id) REFERENCES orders(order_id),
+  FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+CREATE TABLE addresses (
+  id CHAR(36) PRIMARY KEY,
+
+  user_id CHAR(36) NOT NULL,
+
+  name VARCHAR(100),
+  phone VARCHAR(15),
+
+  line1 VARCHAR(255),
+  line2 VARCHAR(255),
+
+  city VARCHAR(100),
+  state VARCHAR(100),
+  pincode VARCHAR(10),
+
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+  FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE carts (
+  id CHAR(36) PRIMARY KEY,
+  user_id CHAR(36),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE cart_items (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  cart_id CHAR(36),
+  product_id INT,
+  quantity INT
+);
