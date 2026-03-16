@@ -30,10 +30,17 @@ import {
 import { logger } from "./pinoLogger.js";
 import { GetAllProducts } from "./app/ShopRoute.js";
 import {
-  AddItemToCart,
   CreateCart,
+  GetCart,
   GetProductDetails,
+  ModifyItemInCart,
 } from "./app/ProductRoute.js";
+import {
+  AddAddress,
+  DeleteAddress,
+  GetAddresses,
+  UpdateAddress,
+} from "./app/CheckoutRoute.js";
 
 // Load environment variables
 dotenv.config();
@@ -79,8 +86,16 @@ app.get("/common/visitors", RegisterVisitors);
 
 app.get("/shop/getProducts", Middleware, GetAllProducts);
 app.post("/product/getProductDetail", Middleware, GetProductDetails);
+
 app.post("/cart/createCart", Middleware, CreateCart);
-app.post("/cart/addToCart", Middleware, AddItemToCart);
+app.post("/cart/modifyItemInCart", Middleware, ModifyItemInCart);
+app.post("/cart/getCart", Middleware, GetCart);
+
+// <------Addresses Route ----------->
+app.post("/address/getAllAddress", Middleware, GetAddresses);
+app.post("/address/addAddress", Middleware, AddAddress);
+app.delete("/address/deleteAddress", Middleware, DeleteAddress);
+app.post("/address/updateAddress", Middleware, UpdateAddress);
 
 // Start the server
 const port = process.env.PORT || 5000;

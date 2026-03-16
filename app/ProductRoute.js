@@ -40,9 +40,9 @@ export const CreateCart = async (req, res) => {
   }
 };
 
-export const AddItemToCart = async (req, res) => {
+export const ModifyItemInCart = async (req, res) => {
   try {
-    const { cartId, productId, qty } = req.body;
+    const { cartId, productId, qty, deleteItem } = req.body;
 
     const [existingQty] = await pool.query(
       cart_items_query.CHECKEXISTINGPRODUCT,
@@ -51,11 +51,18 @@ export const AddItemToCart = async (req, res) => {
     let result;
     if (existingQty.length === 1) {
       // Update existing cart item
-      [result] = await pool.query(cart_items_query.UPDATEITEM, [
-        existingQty[0].quantity + 1,
-        cartId,
-        productId,
-      ]);
+      if (deleteItem || existingQty[0].quantity + qty <= 0) {
+        // Delete the item
+        [result] = await pool.query(cart_items_query.DELETEITEM, [
+          existingQty[0].id,
+        ]);
+      } else {
+        [result] = await pool.query(cart_items_query.UPDATEITEM, [
+          existingQty[0].quantity + qty,
+          cartId,
+          productId,
+        ]);
+      }
     } else {
       // Create new Cart Item
       [result] = await pool.query(cart_items_query.INSERTNEW, [
@@ -72,7 +79,7 @@ export const AddItemToCart = async (req, res) => {
       return res.status(500).json({ success: false, error: "Insert failed" });
     }
   } catch (err) {
-    LogError("AddItemToCart", err);
+    LogError("ModifyItemInCart", err);
     return GenericError(res);
   }
 };
