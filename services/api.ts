@@ -35,7 +35,7 @@ api.interceptors.response.use(
       if (!refreshToken) return Promise.reject(error);
 
       try {
-        const res = await axios.post(`${BackendAPI}/refresh-token`, {
+        const res = await axios.post(`${BackendAPI}/auth/refreshToken`, {
           refreshToken,
         });
 
@@ -84,10 +84,12 @@ export const putRequest = async <T>(url: string, data?: any): Promise<T> => {
   }
 };
 
-export const deleteRequest = async <T>(url: string): Promise<T> => {
+export const deleteRequest = async (
+  url: string,
+  config?: any,
+): Promise<void> => {
   try {
-    const res = await api.delete<T>(url);
-    return res.data;
+    await api.delete(url, config);
   } catch (error: any) {
     throw error.response?.data || error;
   }

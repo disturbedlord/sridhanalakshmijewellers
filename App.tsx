@@ -41,7 +41,8 @@ import * as SecureStore from "expo-secure-store";
 import { jwtDecode } from "jwt-decode";
 import DrawerNavigator from "./layout/DrawerLayout";
 import { clearSecureStore, GetCartId } from "./services/SecureStoreService";
-import { CartContext, CartProvider } from "./context/CartContext";
+import { CartContext, CartProvider, useCart } from "./context/CartContext";
+import { GetCart } from "./services/CartService";
 
 SplashScreen.preventAutoHideAsync();
 type TokenPayload = {
@@ -131,7 +132,7 @@ export default function App() {
 function MainApp() {
   const [loading, setLoading] = useState<boolean>(true);
   const { setUser } = useAuth();
-
+  const { loadCart } = useCart();
   useEffect(() => {
     const initDevice = async () => {
       try {
@@ -180,6 +181,9 @@ function MainApp() {
     console.log(decoded.exp > now);
     if (decoded.exp > now) {
       setInitialRoute("Home");
+      const carts = await GetCart();
+      loadCart(carts);
+      console.log("Carts : ", carts);
     } else {
       const refreshed = await refreshAccessToken(refresh);
       const nextRoute = refreshed !== undefined ? "Home" : "Auth";

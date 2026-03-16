@@ -1,48 +1,48 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Cart, CartItem } from "../Types/CartTypes";
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
 
-  // Load cart from storage
-  useEffect(() => {
-    loadCart();
-  }, []);
+  // // Load cart from storage
+  // useEffect(() => {
+  //   loadCart();
+  // }, []);
 
-  const loadCart = async () => {
-    const data = await AsyncStorage.getItem("cart");
-    if (data) setCart(JSON.parse(data));
+  const loadCart = (initialData: Cart) => {
+    if (initialData) setCart(initialData.items);
   };
 
-  const saveCart = async (items) => {
+  const saveCart = (items: CartItem[]) => {
     setCart(items);
-    await AsyncStorage.setItem("cart", JSON.stringify(items));
+    // await AsyncStorage.setItem("cart", JSON.stringify(items));
   };
 
-  const addToCart = (product) => {
+  const addToCart = (product: CartItem) => {
     let items = [...cart];
 
-    const index = items.findIndex((p) => p.id === product.id);
+    const index = items.findIndex((p) => p.product_id === product.product_id);
 
     if (index >= 0) {
-      items[index].qty += 1;
+      items[index].quantity += 1;
     } else {
-      items.push({ ...product, qty: 1 });
+      items.push({ ...product });
     }
 
     saveCart(items);
   };
 
-  const removeFromCart = (id) => {
+  const removeFromCart = (id: Number) => {
     let items = [...cart];
 
-    const index = items.findIndex((p) => p.id === id);
+    const index = items.findIndex((p) => p.product_id === id);
 
     if (index >= 0) {
-      items[index].qty -= 1;
-      if (items[index].qty <= 0) {
+      items[index].quantity -= 1;
+      if (items[index].quantity <= 0) {
         console.log("Deleting from cart : id : ", id);
         deleteFromCart(id);
       } else {
@@ -52,7 +52,7 @@ export const CartProvider = ({ children }) => {
   };
   const deleteFromCart = (id) => {
     console.log("DELETE : ", id);
-    const items = cart.filter((p) => p.id !== id);
+    const items = cart.filter((p) => p.product_id !== id);
     // console.log(items);
     saveCart(items);
   };
@@ -63,7 +63,14 @@ export const CartProvider = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, clearCart, deleteFromCart }}
+      value={{
+        cart,
+        loadCart,
+        addToCart,
+        removeFromCart,
+        clearCart,
+        deleteFromCart,
+      }}
     >
       {children}
     </CartContext.Provider>

@@ -4,13 +4,16 @@ export type CartResponse = {
   error: string;
 };
 
-export type AddToCart = {
+export type ModifyItemInCart = {
   success: Boolean;
 };
 
 export type CartItem = {
-  productId: Number;
-  quantity: Number;
+  product_id: number;
+  quantity: number;
+  image: string;
+  price: string;
+  name: string;
 };
 
 export type Cart = {

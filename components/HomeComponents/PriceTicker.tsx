@@ -86,7 +86,7 @@ export default function PriceTicker() {
         className="mx-4 flex flex-row "
       >
         <EvilIcons name="cart" size={24} color="#681016" />
-        <AppText className="text-[#681016]">[{cart.length}]</AppText>
+        <AppText className="text-[#681016]">[{cart.length ?? 0}]</AppText>
       </TouchableOpacity>
     </View>
   );

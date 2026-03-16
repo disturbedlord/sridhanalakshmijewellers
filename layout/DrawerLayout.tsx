@@ -13,6 +13,8 @@ import Navbar from "../components/HomeComponents/Navbar";
 import ShopScreen from "../components/Pages/ShopScreen";
 import ProductScreen from "../components/Pages/ProductScreen";
 import CartScreen from "../components/Pages/CartScreen";
+import CheckoutScreen from "../components/Pages/CheckoutScreen";
+import OrderScreen from "../components/Pages/OrderScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -87,6 +89,16 @@ function SchemeStack({ route, navigation }: any) {
         options={{ header: () => <Navbar /> }}
         name="CartScreen"
         component={CartScreen}
+      />
+      <Stack.Screen
+        options={{ header: () => <Navbar /> }}
+        name="CheckoutScreen"
+        component={CheckoutScreen}
+      />
+      <Stack.Screen
+        options={{ header: () => <Navbar /> }}
+        name="OrderScreen"
+        component={OrderScreen}
       />
     </Stack.Navigator>
   );

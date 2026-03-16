@@ -55,7 +55,14 @@ export default function ProductScreen(data: any) {
     if (cartId === null) {
       await CreateCart();
     }
-    if (await AddItemToCart(product?.id, 1)) addToCart(product);
+    if (await AddItemToCart(product?.id, 1))
+      addToCart({
+        image: product?.image,
+        name: product?.name,
+        price: product?.price,
+        product_id: product?.id,
+        quantity: 1,
+      });
     showAddedToCartToast();
   };
 

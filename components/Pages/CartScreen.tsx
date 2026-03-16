@@ -6,25 +6,29 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useCart } from "../../context/CartContext";
 import { Product } from "./ProductScreen";
 import { logger } from "../../utils/logger";
+import { AddItemToCart, GetCart } from "../../services/CartService";
+import { CartItem } from "../../Types/CartTypes";
 
 type Invoice = { subTotal: Number; shipping: Number; total: Number };
 
 export default function CartScreen({ navigation }: any) {
-  const { cart } = useCart();
   // console.log("Cart : ", cart);
+  const { cart } = useCart();
   const [loading, setLoading] = useState<Boolean>(true);
+  const [carts, setCarts] = useState<CartItem[]>([]);
   const [invoice, setInvoice] = useState<Invoice>({
     subTotal: 0,
     shipping: 0,
     total: 0,
   });
+
   const calculatePrice = async () => {
     setLoading(true);
 
     let subTotal = 0;
 
-    cart.forEach((item: Product) => {
-      subTotal += parseFloat(item.price) * item.qty;
+    cart.forEach((item: CartItem) => {
+      subTotal += parseFloat(item.price) * item.quantity;
     });
 
     const invoiceData: Invoice = {
@@ -41,13 +45,28 @@ export default function CartScreen({ navigation }: any) {
     }, 100);
   };
 
+  const Index = async () => {
+    setLoading(true);
+    try {
+      const cartData = await GetCart();
+      if (cartData?.success) {
+        setCarts(cartData.items);
+      }
+    } catch (err) {
+      logger.debug("Cart Screen Error : ", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
+    // Index();
     calculatePrice();
     console.log(cart, 123);
   }, [cart]);
 
   const HandleCheckout = () => {
-    // navigation.navigate("CheckoutScreen" , {cart})
+    navigation.navigate("CheckoutScreen");
   };
 
   return (
@@ -66,8 +85,8 @@ export default function CartScreen({ navigation }: any) {
               <View className="mb-4">
                 {cart.length > 0 ? (
                   cart.map((item, idx) => (
-                    <View key={item.id} className="">
-                      <CartItem item={item} />
+                    <View key={item.product_id} className="">
+                      <CartItemComponent item={item} />
                       {idx !== cart.length - 1 && (
                         <View className="h-px bg-gray-200 my-0.5" />
                       )}
@@ -97,7 +116,7 @@ export default function CartScreen({ navigation }: any) {
             </View>
             <TouchableOpacity
               onPress={HandleCheckout}
-              className="my-5 bg-blue-700 p-4 rounded-md"
+              className="my-5 bg-blue-500 p-4 rounded-md"
             >
               <AppText className="text-center font-poppins-bold text-white">
                 Checkout
@@ -110,9 +129,13 @@ export default function CartScreen({ navigation }: any) {
   );
 }
 
-const CartItem = ({ item }: { item: Product }) => {
+const CartItemComponent = ({ item }: { item: CartItem }) => {
   const { deleteFromCart } = useCart();
-  console.log("Creating CartItems : ", item.id);
+  // console.log("Creating CartItems : ", item.id);
+  const HandleDeleteItem = async () => {
+    const deleteItem = await AddItemToCart(item.product_id, undefined, true);
+    if (deleteItem) deleteFromCart(item.product_id);
+  };
   return (
     <View className="flex-1 my-2 flex-row ">
       <View className="w-[50%]">
@@ -138,7 +161,7 @@ const CartItem = ({ item }: { item: Product }) => {
 
         <View className="flex flex-row justify-between items-center">
           <Counter product={item} />
-          <TouchableOpacity onPress={() => deleteFromCart(item.id)}>
+          <TouchableOpacity onPress={HandleDeleteItem}>
             <MaterialCommunityIcons
               name="delete-outline"
               size={24}
@@ -151,15 +174,19 @@ const CartItem = ({ item }: { item: Product }) => {
   );
 };
 
-function Counter({ product }: { product: Product }) {
+function Counter({ product }: { product: CartItem }) {
   const { addToCart, removeFromCart } = useCart();
 
-  const increment = () => {
-    addToCart(product);
+  const increment = async () => {
+    const itemAdded = await AddItemToCart(product.product_id, 1);
+    if (itemAdded) {
+      addToCart(product);
+    }
   };
 
-  const decrement = () => {
-    removeFromCart(product.id);
+  const decrement = async () => {
+    const itemRemoved = await AddItemToCart(product.product_id, -1);
+    if (itemRemoved) removeFromCart(product.product_id);
   };
 
   return (
@@ -172,7 +199,7 @@ function Counter({ product }: { product: Product }) {
       </TouchableOpacity>
 
       <View className="px-3 py-1">
-        <Text className="text-base font-semibold">{product.qty}</Text>
+        <Text className="text-base font-semibold">{product.quantity}</Text>
       </View>
 
       <TouchableOpacity

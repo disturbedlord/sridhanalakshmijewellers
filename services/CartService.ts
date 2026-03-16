@@ -1,4 +1,9 @@
-import { AddToCart, Cart, CartResponse } from "../Types/CartTypes";
+import {
+  AddToCart,
+  Cart,
+  CartResponse,
+  ModifyItemInCart,
+} from "../Types/CartTypes";
 import { LogError } from "../utils/logger";
 import { postRequest } from "./api";
 import {
@@ -29,15 +34,17 @@ export const CreateCart = async (): Promise<Boolean> => {
 };
 
 export const AddItemToCart = async (
-  productId: string,
-  qty: number,
+  productId: number,
+  qty?: number | undefined,
+  deleteItem?: boolean | undefined,
 ): Promise<Boolean> => {
   try {
     const cartId = await GetCartId();
-    const cart = await postRequest<AddToCart>("/cart/addToCart", {
+    const cart = await postRequest<ModifyItemInCart>("/cart/modifyItemInCart", {
       cartId: cartId,
       productId: productId,
       qty: qty,
+      deleteItem: deleteItem,
     });
 
     if (cart.success) {

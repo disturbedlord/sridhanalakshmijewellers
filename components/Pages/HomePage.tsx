@@ -31,6 +31,8 @@ import {
 } from "../HomeComponents/HomeScreenData";
 import { GetLatestPrice } from "../../services/DashboardService";
 import { getAccessToken } from "../../context/AuthContext";
+import { GetCart } from "../../services/CartService";
+import { useCart } from "../../context/CartContext";
 
 type HomeProps = {
   navigation: HomeScreenNavigationProp;
@@ -43,6 +45,15 @@ export default function HomeScreen({ navigation }: any) {
 
     Linking.openURL(url);
   };
+  const { loadCart } = useCart();
+  const fetchCart = async () => {
+    const carts = await GetCart();
+    loadCart(carts);
+    console.log("Carts : ", carts);
+  };
+  useEffect(() => {
+    fetchCart();
+  }, []);
 
   return (
     <View className="flex-1">
