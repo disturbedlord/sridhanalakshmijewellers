@@ -41,6 +41,11 @@ import {
   GetAddresses,
   UpdateAddress,
 } from "./app/CheckoutRoute.js";
+import {
+  AddOrderItemsToOrder,
+  CreateNewOrder,
+  UpdateOrderStatus,
+} from "./app/OrderRoute.js";
 
 // Load environment variables
 dotenv.config();
@@ -96,6 +101,11 @@ app.post("/address/getAllAddress", Middleware, GetAddresses);
 app.post("/address/addAddress", Middleware, AddAddress);
 app.delete("/address/deleteAddress", Middleware, DeleteAddress);
 app.post("/address/updateAddress", Middleware, UpdateAddress);
+
+// <---------Orders Route ---------->
+app.post("/orders/createNewOrder", Middleware, CreateNewOrder);
+app.post("/orders/updateOrderStatus", Middleware, UpdateOrderStatus);
+app.post("/orders/addItemsToOrder", Middleware, AddOrderItemsToOrder);
 
 // Start the server
 const port = process.env.PORT || 5000;
