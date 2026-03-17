@@ -4,6 +4,7 @@ import pool from "../db.js";
 import { generateAccessToken, generateRefreshToken } from "./common/utils.js";
 import { user_devices_insert } from "../DBHelper/queries.js";
 import { logger } from "../pinoLogger.js";
+import { getCartId } from "./ProductRoute.js";
 
 export const Register = async (req, res) => {
   const { name, mobile_no, password } = req.body;
@@ -83,7 +84,8 @@ export const Login = async (req, res) => {
 
     // Create JWT token
     const accessToken = generateAccessToken(user.user_id);
-
+    const cartId = await getCartId(user.user_id);
+    console.log(cartId, "CARTID");
     res.json({
       userMobileNo: user.mobile_no,
       userId: user.user_id,
@@ -91,6 +93,7 @@ export const Login = async (req, res) => {
       message: "Login successful",
       accessToken,
       refreshToken,
+      cartId: cartId,
     });
   } catch (err) {
     console.error(err);

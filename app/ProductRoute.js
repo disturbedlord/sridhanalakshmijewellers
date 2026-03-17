@@ -84,21 +84,27 @@ export const ModifyItemInCart = async (req, res) => {
   }
 };
 
+export const GetExistingCart = async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const cartId = getCartId(userId);
+    if (cartDetails.length > 0) {
+      return res.status(200).json({ success: true, cartId: cartId });
+    } else {
+      return res.status(500).json({ success: false, cartId: "" });
+    }
+  } catch (err) {
+    LogError("GetExistingCart", err);
+    GenericError(res);
+  }
+};
+
 export const GetCart = async (req, res) => {
   try {
-    const { cartId, userId } = req.body;
+    const { cartId } = req.body;
     let result;
-    if (cartId != null) {
-      [result] = await pool.query(cart_items_query.GETCART, [cartId]);
-    } else if (userId != null) {
-      const [cartDetails] = await pool.query(
-        cart_items_query.GETCARTIDBASEDONUSERID,
-        [userId],
-      );
-      if (cartDetails.length > 0) {
-        [result] = await pool.query(cart_items_query.GETCART, [cartDetails.id]);
-      }
-    }
+    [result] = await pool.query(cart_items_query.GETCART, [cartId]);
+
     if (result.length > 0) {
       return res.status(200).json({ success: true, items: result });
     } else {
@@ -108,4 +114,16 @@ export const GetCart = async (req, res) => {
     LogError("GetCart", err);
     return GenericError(res);
   }
+};
+
+export const getCartId = async (userId) => {
+  // const { userId } = req.body;
+
+  const [cartDetails] = await pool.query(
+    cart_items_query.GETCARTIDBASEDONUSERID,
+    [userId],
+  );
+
+  console.log(userId, cartDetails[0]?.id);
+  return cartDetails?.length > 0 ? cartDetails[0]?.id : null;
 };
