@@ -32,6 +32,8 @@ switch (process.env.ENVIRONMENT) {
       queueLimit: 0,
     };
 }
+console.log(process.env.ENVIRONMENT, conn);
+
 // Create a connection to the database
 const pool = mysql.createPool(conn);
 
