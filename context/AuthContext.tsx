@@ -22,18 +22,21 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-async function saveTokens(
+function saveTokens(
   access: string,
   refresh: string,
   name: string,
   userMobileNo: string,
   userId: string,
+  cartId: string,
 ) {
-  await SecureStore.setItemAsync("accessToken", access);
-  await SecureStore.setItemAsync("refreshToken", refresh);
-  await SecureStore.setItemAsync("userName", name);
-  await SecureStore.setItemAsync("userMobileNo", userMobileNo);
-  await SecureStore.setItemAsync("userId", userId);
+  SecureStore.setItem("accessToken", access);
+  SecureStore.setItem("refreshToken", refresh);
+  SecureStore.setItem("userName", name);
+  SecureStore.setItem("userMobileNo", userMobileNo);
+  SecureStore.setItem("userId", userId);
+  if (cartId) SecureStore.setItem("cartId", `${cartId}:${userId}`);
+  console.log("Secure Store Items set");
 }
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -45,12 +48,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       if (data && data.userId) {
         setUser(data); // Store user
+        console.log(data);
         saveTokens(
           data.accessToken,
           data.refreshToken,
           data.name,
           data.userMobileNo,
           data.userId,
+          data.cartId,
         );
         return { msg: data.message, status: 1 };
       } else if (data && data.error) {

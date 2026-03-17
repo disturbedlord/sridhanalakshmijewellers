@@ -9,7 +9,7 @@ import { logger } from "../../utils/logger";
 import { AddItemToCart, GetCart } from "../../services/CartService";
 import { CartItem } from "../../Types/CartTypes";
 
-type Invoice = { subTotal: Number; shipping: Number; total: Number };
+type Invoice = { subTotal: number; shipping: number; total: number };
 
 export default function CartScreen({ navigation }: any) {
   // console.log("Cart : ", cart);
@@ -27,14 +27,14 @@ export default function CartScreen({ navigation }: any) {
 
     let subTotal = 0;
 
-    cart.forEach((item: CartItem) => {
+    cart?.forEach((item: CartItem) => {
       subTotal += parseFloat(item.price) * item.quantity;
     });
 
     const invoiceData: Invoice = {
       subTotal: subTotal,
-      shipping: cart.length > 0 ? 550 : 0,
-      total: subTotal + (cart.length > 0 ? 550 : 0),
+      shipping: cart?.length > 0 ? 550 : 0,
+      total: subTotal + (cart?.length > 0 ? 550 : 0),
     };
 
     setInvoice(invoiceData);
@@ -79,15 +79,15 @@ export default function CartScreen({ navigation }: any) {
             <ScrollView className="p-4 flex-1 h-[70%]">
               <View>
                 <AppText className="text-2xl font-poppins-bold">
-                  Cart({cart.length})
+                  Cart({cart?.length ?? 0})
                 </AppText>
               </View>
               <View className="mb-4">
-                {cart.length > 0 ? (
-                  cart.map((item, idx) => (
+                {cart?.length > 0 ? (
+                  cart?.map((item, idx) => (
                     <View key={item.product_id} className="">
                       <CartItemComponent item={item} />
-                      {idx !== cart.length - 1 && (
+                      {idx !== cart?.length - 1 && (
                         <View className="h-px bg-gray-200 my-0.5" />
                       )}
                     </View>
@@ -104,19 +104,20 @@ export default function CartScreen({ navigation }: any) {
           <View className="h-[30%] mt-5 flex-1 bg-white p-4 rounded-lg">
             <View className="flex flex-row justify-between">
               <AppText className="font-poppins-semibold">Sub Total</AppText>
-              <PriceView price={invoice.subTotal} className="" />
+              <PriceView price={invoice?.subTotal} className="" />
             </View>
             <View className="flex flex-row justify-between">
               <AppText className="font-poppins-semibold">Shipping</AppText>
-              <PriceView price={invoice.shipping} className="" />
+              <PriceView price={invoice?.shipping} className="" />
             </View>
             <View className="flex flex-row justify-between">
               <AppText className="font-poppins-semibold">Total</AppText>
-              <PriceView price={invoice.total} className="" />
+              <PriceView price={invoice?.total} className="" />
             </View>
             <TouchableOpacity
               onPress={HandleCheckout}
-              className="my-5 bg-blue-500 p-4 rounded-md"
+              className={`my-5 ${invoice.total > 0 ? "bg-blue-500" : "bg-gray-500"} p-4 rounded-md`}
+              disabled={invoice.total > 0 ? false : true}
             >
               <AppText className="text-center font-poppins-bold text-white">
                 Checkout

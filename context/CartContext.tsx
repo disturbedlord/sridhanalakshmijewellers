@@ -13,7 +13,7 @@ export const CartProvider = ({ children }) => {
   // }, []);
 
   const loadCart = (initialData: Cart) => {
-    if (initialData) setCart(initialData.items);
+    setCart(initialData?.items ?? []);
   };
 
   const saveCart = (items: CartItem[]) => {
@@ -23,7 +23,7 @@ export const CartProvider = ({ children }) => {
 
   const addToCart = (product: CartItem) => {
     let items = [...cart];
-
+    console.log("1 : ", items);
     const index = items.findIndex((p) => p.product_id === product.product_id);
 
     if (index >= 0) {

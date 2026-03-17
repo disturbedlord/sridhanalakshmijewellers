@@ -33,6 +33,7 @@ import { GetLatestPrice } from "../../services/DashboardService";
 import { getAccessToken } from "../../context/AuthContext";
 import { GetCart } from "../../services/CartService";
 import { useCart } from "../../context/CartContext";
+import { GetCartId, GetUserId } from "../../services/SecureStoreService";
 
 type HomeProps = {
   navigation: HomeScreenNavigationProp;
@@ -47,6 +48,7 @@ export default function HomeScreen({ navigation }: any) {
   };
   const { loadCart } = useCart();
   const fetchCart = async () => {
+    console.log("CARTCART : ", await GetUserId());
     const carts = await GetCart();
     loadCart(carts);
     console.log("Carts : ", carts);

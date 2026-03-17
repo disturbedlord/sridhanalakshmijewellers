@@ -20,7 +20,7 @@ export const CreateCart = async (): Promise<Boolean> => {
     });
     if (
       cart.success &&
-      (await SetSecureStoreValue("cartId", cart.result.cartId))
+      (await SetSecureStoreValue("cartId", `${cart.result.cartId}:${userId}`))
     ) {
       return true;
     } else {
@@ -28,6 +28,7 @@ export const CreateCart = async (): Promise<Boolean> => {
       return false;
     }
   } catch (err) {
+    console.log(err);
     LogError("CreateCart", err);
     return false;
   }
@@ -40,6 +41,7 @@ export const AddItemToCart = async (
 ): Promise<Boolean> => {
   try {
     const cartId = await GetCartId();
+    console.log(cartId, productId, qty, deleteItem);
     const cart = await postRequest<ModifyItemInCart>("/cart/modifyItemInCart", {
       cartId: cartId,
       productId: productId,
@@ -50,11 +52,11 @@ export const AddItemToCart = async (
     if (cart.success) {
       return true;
     } else {
-      LogError("CreateCart : Error in Creating Cart Id");
+      LogError("AddItemToCart : Error in Creating Cart Id");
       return false;
     }
   } catch (err) {
-    LogError("CreateCart", err);
+    LogError("AddItemToCart", err);
     return false;
   }
 };
@@ -62,6 +64,7 @@ export const AddItemToCart = async (
 export const GetCart = async (): Promise<Cart | null> => {
   try {
     const cartId = await GetCartId();
+    console.log(cartId, "CCCCCCCCCCCCC");
     if (!cartId) return null;
     const cart = await postRequest<Cart>("/cart/getCart", {
       cartId: cartId,
@@ -70,11 +73,11 @@ export const GetCart = async (): Promise<Cart | null> => {
     if (cart.success) {
       return cart;
     } else {
-      LogError("CreateCart : Error in Creating Cart Id ", cart.error);
+      LogError("GetCart : Error in Creating Cart Id ", cart.error);
       return null;
     }
   } catch (err) {
-    LogError("CreateCart", err);
+    LogError("GetCart", err);
     return null;
   }
 };

@@ -9,6 +9,7 @@ export const clearSecureStore = async () => {
     await SecureStore.deleteItemAsync("device_id");
     await SecureStore.deleteItemAsync("userMobileNo");
     await SecureStore.deleteItemAsync("userId");
+    await SecureStore.deleteItemAsync("cartId");
     console.log("SecureStore cleared");
   } catch (error) {
     console.error("Failed to clear SecureStore:", error);
@@ -29,8 +30,11 @@ export const GetSecureStoreAccessToken = async () => {
 export const GetCartId = async () => {
   try {
     const cartId = await SecureStore.getItemAsync("cartId");
+    const userId = await SecureStore.getItemAsync("userId");
+
     console.log("cartId  : ", cartId);
-    return cartId;
+    if (cartId?.indexOf(userId) >= 0) return cartId?.split(":")[0];
+    else return null;
   } catch (err) {
     logger.error("GetCartId Failed : ", err);
   }

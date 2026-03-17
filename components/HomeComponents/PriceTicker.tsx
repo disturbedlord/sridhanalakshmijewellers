@@ -57,7 +57,7 @@ export default function PriceTicker() {
               metalPrice &&
               metalPrice[selected?.technicalName] !== undefined
                 ? "Loading ..."
-                : `${selected?.name} - ₹${metalPrice && metalPrice[selected?.technicalName]}`}
+                : `${selected?.name} - ₹${(metalPrice && metalPrice[selected?.technicalName]) ?? 0}`}
             </AppText>
             <View style={{ transform: [{ rotate: open ? "180deg" : "0deg" }] }}>
               <Svg
@@ -86,7 +86,7 @@ export default function PriceTicker() {
         className="mx-4 flex flex-row "
       >
         <EvilIcons name="cart" size={24} color="#681016" />
-        <AppText className="text-[#681016]">[{cart.length ?? 0}]</AppText>
+        <AppText className="text-[#681016]">[{cart?.length ?? 0}]</AppText>
       </TouchableOpacity>
     </View>
   );

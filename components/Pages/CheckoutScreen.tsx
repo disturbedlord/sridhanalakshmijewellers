@@ -93,19 +93,24 @@ export default function CheckoutScreen({ navigation }: any) {
     setTotalPrice(subTotal + shipping);
   };
 
-  const HandleCheckout = () => {
+  const HandleCheckout = async () => {
     navigation.navigate("OrderScreen", {
       address: userSelectedAddress,
       orderId: orderId,
     });
+
+    // 1. Create a new Order
+    // const order = await CreateNewOrder();
   };
 
   return (
     <View className="flex-1 ">
-      <View className="h-[85%]">
-        <ScrollView contentContainerStyle={{ paddingBottom: 150 }}>
+      <View className="h-[80%]">
+        <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
           <View className="pt-2 px-6">
-            <AppText className="font-poppins-bold text-3xl">Checkout</AppText>
+            <AppText className="font-poppins-bold text-3xl">
+              Place Order
+            </AppText>
           </View>
           <View className=" px-6 pb-2 flex flex-row justify-between items-center">
             <AppText className="font-poppins-semibold text-lg">
@@ -139,9 +144,12 @@ export default function CheckoutScreen({ navigation }: any) {
                         />
                       </View>
                     ) : (
-                      <View>
-                        <AppText className="text-center text-gray-500">
+                      <View className="flex flex-col gap-5">
+                        <AppText className="text-center font-poppins-semibold text-gray-500">
                           Nothing to show
+                        </AppText>
+                        <AppText className="text-center  text-gray-500">
+                          Create an address to continue
                         </AppText>
                       </View>
                     )}
@@ -211,10 +219,11 @@ export default function CheckoutScreen({ navigation }: any) {
         </ScrollView>
       </View>
 
-      <View className="absolute h-[15%] bottom-0 w-full p-4 bg-white">
+      <View className="absolute h-[20%] bottom-0 w-full p-4 bg-white">
         <TouchableOpacity
           onPress={HandleCheckout}
-          className="my-5 bg-blue-500 p-4 rounded-md"
+          className={`my-5 ${userSelectedAddress ? "bg-blue-500" : "bg-gray-500"} p-4 rounded-md`}
+          disabled={userSelectedAddress ? false : true}
         >
           <AppText className="text-center font-poppins-bold text-white">
             Pay{" "}
@@ -320,7 +329,7 @@ const AddressModal = ({
             </ScrollView>
             <Pressable
               onPress={handleSubmit}
-              className="bg-blue-500 py-3 rounded-lg m-4 "
+              className="bg-blue-500 py-3 rounded-lg m-4 mb-16"
             >
               {!addressLoading ? (
                 <AppText className="text-white text-center font-poppins-semibold">

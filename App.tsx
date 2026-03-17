@@ -107,9 +107,9 @@ export default function App() {
       <SafeAreaProvider>
         <SafeAreaView style={{ flex: 1 }}>
           {!BackendActive ? (
-            <View className="flex items-center justify-center">
+            <View className="flex items-center justify-center bg-white">
               <Spinner />
-              <AppText>Waiting for backend to wake up !!!</AppText>
+              <AppText>Waiting for backend(Render) to wake up !!!</AppText>
             </View>
           ) : (
             <CartProvider>
@@ -160,7 +160,8 @@ function MainApp() {
     const name = await SecureStore.getItemAsync("userName");
     const userMobileNo = await SecureStore.getItemAsync("userMobileNo");
     const userId = await SecureStore.getItemAsync("userId");
-    logger.debug(access, refresh, name, userMobileNo);
+    const cartId = await SecureStore.getItemAsync("cartId");
+    logger.debug(access, refresh, name, userMobileNo, cartId);
     setUser({
       user: userMobileNo,
       name: name,
@@ -168,6 +169,7 @@ function MainApp() {
       accessToken: access,
       refreshToken: refresh,
       userId: userId,
+      cartId: cartId,
     });
     if (!access || !refresh || !name || !userMobileNo) {
       clearSecureStore();
@@ -178,16 +180,13 @@ function MainApp() {
 
     const decoded = jwtDecode<TokenPayload>(access);
     const now = Date.now() / 1000;
-    console.log(decoded.exp > now);
+    logger.debug(decoded.exp > now);
     if (decoded.exp > now) {
       setInitialRoute("Home");
-      const carts = await GetCart();
-      loadCart(carts);
-      console.log("Carts : ", carts);
     } else {
       const refreshed = await refreshAccessToken(refresh);
       const nextRoute = refreshed !== undefined ? "Home" : "Auth";
-      console.log("HI : ", refreshed, nextRoute);
+      logger.debug("HI : ", refreshed, nextRoute);
 
       setInitialRoute(nextRoute);
     }
