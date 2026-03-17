@@ -7,4 +7,5 @@ export const cart_items_query = {
   DELETEITEM: "DELETE FROM cart_items WHERE id = ?;",
   GETCART:
     "SELECT ct.product_id , ct.quantity , p.name , p.price , p.image FROM cart_items ct , products p WHERE ct.product_id = p.id AND ct.cart_id = ?",
+  GETCARTIDBASEDONUSERID: "SELECT id FROM carts WHERE user_id=?;",
 };

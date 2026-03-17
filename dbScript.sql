@@ -171,6 +171,7 @@ CREATE TABLE products (
   FOREIGN KEY (category_id) REFERENCES categories(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
 CREATE TABLE orders (
   order_id CHAR(36) PRIMARY KEY,
 
@@ -226,15 +227,26 @@ CREATE TABLE addresses (
   FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
-CREATE TABLE carts (
-  id CHAR(36) PRIMARY KEY,
-  user_id CHAR(36),
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
 
-CREATE TABLE cart_items (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  cart_id CHAR(36),
-  product_id INT,
-  quantity INT
-);
+CREATE TABLE `carts` (
+	`id` CHAR(36) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`user_id` CHAR(36) NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`created_at` TIMESTAMP NULL DEFAULT (CURRENT_TIMESTAMP),
+	PRIMARY KEY (`id`) USING BTREE
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+;
+
+CREATE TABLE `cart_items` (
+	`id` CHAR(36) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`cart_id` CHAR(36) NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`product_id` INT NULL DEFAULT NULL,
+	`quantity` INT NULL DEFAULT NULL,
+	PRIMARY KEY (`id`) USING BTREE,
+	UNIQUE INDEX `cart_id` (`cart_id`, `product_id`) USING BTREE,
+	UNIQUE INDEX `cart_id_2` (`cart_id`, `product_id`) USING BTREE
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+;

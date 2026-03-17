@@ -86,10 +86,19 @@ export const ModifyItemInCart = async (req, res) => {
 
 export const GetCart = async (req, res) => {
   try {
-    const { cartId } = req.body;
-
-    const [result] = await pool.query(cart_items_query.GETCART, [cartId]);
-
+    const { cartId, userId } = req.body;
+    let result;
+    if (cartId != null) {
+      [result] = await pool.query(cart_items_query.GETCART, [cartId]);
+    } else if (userId != null) {
+      const [cartDetails] = await pool.query(
+        cart_items_query.GETCARTIDBASEDONUSERID,
+        [userId],
+      );
+      if (cartDetails.length > 0) {
+        [result] = await pool.query(cart_items_query.GETCART, [cartDetails.id]);
+      }
+    }
     if (result.length > 0) {
       return res.status(200).json({ success: true, items: result });
     } else {
