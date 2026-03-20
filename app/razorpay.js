@@ -200,7 +200,10 @@ export const MarkPaymentStatus = async (req, res) => {
     }
   } catch (err) {
     LogError("MarkPaymentStatus", err);
-    GenericError(res);
+    return res.status(500).json({
+      success: false,
+      error: "Internal server error",
+    });
   }
 };
 export const MarkPaymentStatusLogic = async (
