@@ -1,0 +1,17 @@
+{
+  "version": "3.4",
+  "type": "table",
+  "title": "Jewellery Price",
+  "hideInSidebar": false,
+  "config": {
+    "dataSource": "mysql_35pb",
+    "fetchStrategy": "databaseTable",
+    "table": "metalPrice",
+    "columns": [
+      {
+        "column": "created_at",
+        "hiddenInForm": true
+      }
+    ]
+  }
+}

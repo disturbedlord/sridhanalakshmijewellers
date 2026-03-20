@@ -21,7 +21,8 @@
     "mysql2": "^2.3.0",
     "react": "^19.x",
     "react-dom": "^19.x",
-    "react-router-dom": "^7.x"
+    "react-router-dom": "^7.x",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.x",

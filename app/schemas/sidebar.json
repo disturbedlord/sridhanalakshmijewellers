@@ -2,6 +2,7 @@
   "menuPageOrder": [
     "products",
     "orders",
-    "categories"
+    "categories",
+    "jewelleryPrice"
   ]
 }
