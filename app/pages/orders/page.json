@@ -4,13 +4,9 @@
   "title": "Orders",
   "hideInSidebar": false,
   "config": {
-    "dataSource": "mysql_zdgg",
+    "dataSource": "mysql_sbfv",
     "fetchStrategy": "databaseTable",
     "table": "orders",
-    "allowInsert": false,
     "allowDelete": false
-  },
-  "allowedRoles": [
-    "User"
-  ]
+  }
 }

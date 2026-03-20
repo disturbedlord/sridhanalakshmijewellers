@@ -4,10 +4,8 @@
   "title": "Categories",
   "hideInSidebar": false,
   "config": {
-    "dataSource": "mysql_zdgg",
+    "dataSource": "mysql_sbfv",
     "fetchStrategy": "databaseTable",
-    "table": "categories",
-    "allowDelete": false,
-    "allowInsert": false
+    "table": "categories"
   }
 }
