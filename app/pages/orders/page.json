@@ -4,9 +4,8 @@
   "title": "Orders",
   "hideInSidebar": false,
   "config": {
-    "dataSource": "mysql_sbfv",
+    "dataSource": "mysql_35pb",
     "fetchStrategy": "databaseTable",
-    "table": "orders",
-    "allowDelete": false
+    "table": "orders"
   }
 }

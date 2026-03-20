@@ -4,7 +4,7 @@
   "title": "Categories",
   "hideInSidebar": false,
   "config": {
-    "dataSource": "mysql_sbfv",
+    "dataSource": "mysql_35pb",
     "fetchStrategy": "databaseTable",
     "table": "categories"
   }

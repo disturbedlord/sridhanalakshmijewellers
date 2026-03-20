@@ -4,7 +4,7 @@
   "title": "Products",
   "hideInSidebar": false,
   "config": {
-    "dataSource": "mysql_sbfv",
+    "dataSource": "mysql_35pb",
     "fetchStrategy": "databaseTable",
     "table": "products"
   }
