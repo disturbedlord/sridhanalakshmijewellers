@@ -109,7 +109,9 @@ export const Webhooks = async (req, res) => {
 
       if (rows[0].status !== "success") {
         // process payment
-        if (MarkPaymentStatus(razorpayOrderId, razorpayPaymentId, "success"))
+        if (
+          MarkPaymentStatusLogic(razorpayOrderId, razorpayPaymentId, "success")
+        )
           logger.info(
             "Payment Marked Success for Razorpay Order Id : ",
             razorpayOrderId,
