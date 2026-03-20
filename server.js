@@ -8,6 +8,7 @@ import pool from "./db.js";
 import { v4 as uuidv4 } from "uuid";
 import {
   CreateRazorpayOrder,
+  MarkPaymentStatus,
   VerifyPayments,
   Webhooks,
 } from "./app/razorpay.js";
@@ -44,8 +45,14 @@ import {
 import {
   AddOrderItemsToOrder,
   CreateNewOrder,
+  GetExistingOrder,
   UpdateOrderStatus,
 } from "./app/OrderRoute.js";
+import { CreateInstallment } from "./app/Installments.js";
+import { GetAllPaidOrders } from "./app/MyOrders.js";
+import { UploadImage } from "./app/kottster.js";
+import multer from "multer";
+import path from "path";
 
 // Load environment variables
 dotenv.config();
@@ -54,6 +61,19 @@ const app = express();
 app.use(express.json()); // Parse JSON request bodies
 app.use(cors()); // Allow all domains to make requests (you can restrict it later)
 app.use("/assets", express.static("assets"));
+// storage config
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "assets/images/products");
+  },
+  filename: (req, file, cb) => {
+    const uniqueName = Date.now() + path.extname(file.originalname);
+    cb(null, uniqueName);
+  },
+});
+
+const upload = multer({ storage });
+
 // Register a new user
 app.post("/auth/register", Register);
 
@@ -89,6 +109,9 @@ app.post(
 // Dummy Route to keep render always on
 app.get("/common/visitors", RegisterVisitors);
 
+// <------Payments Route ---->
+app.post("/payments/updatePaymentStatus", Middleware, MarkPaymentStatus);
+
 app.get("/shop/getProducts", Middleware, GetAllProducts);
 app.post("/product/getProductDetail", Middleware, GetProductDetails);
 
@@ -104,9 +127,18 @@ app.post("/address/updateAddress", Middleware, UpdateAddress);
 
 // <---------Orders Route ---------->
 app.post("/orders/createNewOrder", Middleware, CreateNewOrder);
+app.post("/orders/getExistingOrder", Middleware, GetExistingOrder);
 app.post("/orders/updateOrderStatus", Middleware, UpdateOrderStatus);
 app.post("/orders/addItemsToOrder", Middleware, AddOrderItemsToOrder);
 
+// <---------Installment ROute ---------->
+app.post("/installment/createInstallments", Middleware, CreateInstallment);
+
+// <----------My Orders Route----------->
+app.post("/myorders/getAllOrders", Middleware, GetAllPaidOrders);
+
+// <-------Image Upload Route fom Kottster -------->
+app.post("/kottster/products/imageUpload", upload.single("file"), UploadImage);
 // Start the server
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

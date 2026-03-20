@@ -103,8 +103,9 @@ export const GetCart = async (req, res) => {
   try {
     const { cartId } = req.body;
     let result;
+    console.log(cartId);
     [result] = await pool.query(cart_items_query.GETCART, [cartId]);
-
+    console.log(result);
     if (result.length > 0) {
       return res.status(200).json({ success: true, items: result });
     } else {

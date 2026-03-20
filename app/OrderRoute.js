@@ -28,6 +28,24 @@ export const CreateNewOrder = async (req, res) => {
   }
 };
 
+export const GetExistingOrder = async (req, res) => {
+  try {
+    const { userId } = req.body;
+
+    const [query] = await pool.query(order_query.CHECKEXISTING, [userId]);
+    if (query.length === 1) {
+      return res
+        .status(200)
+        .json({ success: true, orderId: query[0].order_id });
+    } else {
+      return res.status(200).json({ success: false });
+    }
+  } catch (err) {
+    LogError(CreateNewOrder, err);
+    GenericError(res);
+  }
+};
+
 export const UpdateOrderStatus = async (req, res) => {
   try {
     const { status, orderId } = req.body;
@@ -51,6 +69,7 @@ export const UpdateOrderStatus = async (req, res) => {
 export const AddOrderItemsToOrder = async (req, res) => {
   try {
     const { orderId, orderItems } = req.body;
+    console.log(orderId, orderItems);
     const insertQuery = [];
     for (let i = 0; i < orderItems.length; i++) {
       const { productId, quantity, price } = orderItems[i];

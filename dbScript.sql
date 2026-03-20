@@ -154,22 +154,28 @@ CREATE TABLE categories (
   created_date DATE NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE products (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  sku VARCHAR(50) NOT NULL UNIQUE,
-  name VARCHAR(255) NOT NULL,
-  category VARCHAR(100) NOT NULL,
-  description TEXT NOT NULL,
-  price DECIMAL(10,2) NOT NULL,
-  weight_grams DECIMAL(6,2) NOT NULL,
-  purity VARCHAR(100) NOT NULL DEFAULT '925 Sterling Silver',
-  image VARCHAR(255) NOT NULL,
-  is_active TINYINT(1) NOT NULL DEFAULT 1,
-  stock_quantity INT NOT NULL DEFAULT 0,
-  created_date DATE NOT NULL,
-  category_id INT,
-  FOREIGN KEY (category_id) REFERENCES categories(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `products` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`sku` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`name` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`description` TEXT NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`price` DECIMAL(10,2) NOT NULL,
+	`weight_grams` DECIMAL(6,2) NOT NULL,
+	`purity` VARCHAR(100) NOT NULL DEFAULT '925 Sterling Silver' COLLATE 'utf8mb4_0900_ai_ci',
+	`image` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`is_active` TINYINT(1) NOT NULL DEFAULT '1',
+	`stock_quantity` INT NOT NULL DEFAULT '0',
+	`created_date` DATE NOT NULL,
+	`category_id` INT NOT NULL,
+	PRIMARY KEY (`id`) USING BTREE,
+	UNIQUE INDEX `sku` (`sku`) USING BTREE,
+	INDEX `category_id` (`category_id`) USING BTREE,
+	CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=106
+;
 
 
 CREATE TABLE orders (

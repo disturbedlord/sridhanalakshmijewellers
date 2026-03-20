@@ -10,6 +10,8 @@ import {
 } from "./common/Schemes.js";
 import { logger } from "../pinoLogger.js";
 import { Middleware } from "./commonRoute.js";
+import { LogError } from "../Logger/LogHelper.js";
+import { GenericError } from "../APIHelper/commonMethods.js";
 
 dotenv.config();
 
@@ -46,8 +48,8 @@ export const CreateRazorpayOrder = async (req, res) => {
 
 export const VerifyPayments = async (req, res) => {
   try {
-    const { schemeData, isNewSubscription, payment, userId } = req.body;
-    console.log(req.body, isNewSubscription === true);
+    const { payment } = req.body;
+    console.log(req.body);
     const body = payment.razorpay_order_id + "|" + payment.razorpay_payment_id;
 
     const expectedSignature = crypto
@@ -56,35 +58,9 @@ export const VerifyPayments = async (req, res) => {
       .digest("hex");
 
     if (expectedSignature === payment.razorpay_signature) {
-      if (isNewSubscription === true) {
-        const res = await CreateSchemeSubscription({
-          schemeData: schemeData,
-          user_id: userId,
-        });
-        const newInstallmentId =
-          res?.CreateNewUserScheme?.installmentResult?.firstInstallmentId;
-        MarkPaymentStatus(
-          newInstallmentId,
-          payment.razorpay_order_id,
-          payment.razorpay_payment_id,
-          "success",
-        );
-        if (MarkInstallmentStatus(newInstallmentId, new Date(), "paid"))
-          logger.info(
-            `Installment Updated for Installment_id : ${newInstallmentId}`,
-          );
-      } else {
-        // Paying for existing Installment
-        const { installmentId } = req.body;
-        console.log("InstlallnemtId : ", installmentId);
-        if (MarkInstallmentStatus(installmentId, new Date(), "paid"))
-          logger.info(
-            `Installment Updated for Installment_id : ${installmentId}`,
-          );
-      }
-      res.json({ status: 1, message: "payment verified" });
+      res.json({ success: true });
     } else {
-      res.status(400).json({ status: 0, message: "invalid payment" });
+      res.status(400).json({ success: false, message: "invalid payment" });
     }
   } catch (err) {
     logger.info(`Verify Payment Error ${err}`);
@@ -197,29 +173,73 @@ export const Webhooks = async (req, res) => {
   }
 };
 
-const MarkPaymentStatus = async (
+export const MarkPaymentStatus = async (req, res) => {
+  try {
+    const {
+      installment_id,
+      razorpay_order_id,
+      razorpay_payment_id,
+      status,
+      order_id,
+    } = req.body;
+    console.log("1 : ", req.body);
+    const response = await MarkPaymentStatusLogic(
+      installment_id,
+      razorpay_order_id,
+      razorpay_payment_id,
+      status,
+      order_id,
+    );
+
+    if (response) {
+      return res.status(200).json(response);
+    } else {
+      return res.status(500).json(response);
+    }
+  } catch (err) {
+    LogError("MarkPaymentStatus", err);
+    GenericError(res);
+  }
+};
+export const MarkPaymentStatusLogic = async (
   installment_id,
   razorpay_order_id,
   razorpay_payment_id,
   status,
+  order_id,
 ) => {
-  logger.info(installment_id, razorpay_order_id, razorpay_payment_id, status);
   try {
+    console.log(
+      installment_id,
+      razorpay_order_id,
+      razorpay_payment_id,
+      status,
+      order_id,
+    );
+
     const UpdatePaymentQuery =
       "UPDATE payments SET razorpay_payment_id = ?,\
     status = ?,\
-     installment_id = ? \
+    installment_id = ?,\
+     order_id = ? \
      WHERE razorpay_order_id = ? ";
-
-    await pool.query(UpdatePaymentQuery, [
+    console.log(UpdatePaymentQuery);
+    const [query] = await pool.query(UpdatePaymentQuery, [
       razorpay_payment_id,
       status,
       installment_id,
+      order_id,
       razorpay_order_id,
     ]);
-    return true;
+    console.log(query);
+    if (query.affectedRows === 1) return { success: true };
+    else
+      return {
+        success: false,
+        error: " Update Failed for MarkPaymentStatusLogic",
+      };
   } catch (err) {
-    logger.info("MarkPaymentStatus Failed with error : ", err);
+    logger.info("MarkPaymentStatusLogic Failed with error : ", err);
     return false;
   }
 };
