@@ -1,0 +1,16 @@
+{
+  "version": "3.4",
+  "type": "table",
+  "title": "Orders",
+  "hideInSidebar": false,
+  "config": {
+    "dataSource": "mysql_zdgg",
+    "fetchStrategy": "databaseTable",
+    "table": "orders",
+    "allowInsert": false,
+    "allowDelete": false
+  },
+  "allowedRoles": [
+    "User"
+  ]
+}

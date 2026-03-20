@@ -1,0 +1,11 @@
+{
+  "version": "3.4",
+  "type": "table",
+  "title": "Products",
+  "hideInSidebar": false,
+  "config": {
+    "dataSource": "mysql_zdgg",
+    "fetchStrategy": "databaseTable",
+    "table": "products"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "version": "3.4",
+  "type": "table",
+  "title": "Categories",
+  "hideInSidebar": false,
+  "config": {
+    "dataSource": "mysql_zdgg",
+    "fetchStrategy": "databaseTable",
+    "table": "categories",
+    "allowDelete": false,
+    "allowInsert": false
+  }
+}
