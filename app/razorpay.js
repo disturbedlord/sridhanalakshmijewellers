@@ -31,6 +31,8 @@ export const CreateRazorpayOrder = async (req, res) => {
       receipt: "receipt_" + Date.now(),
     };
 
+    console.log("Avinash : ", options);
+
     const order = await razorpay.orders.create(options);
     logger.info(order);
     const query = await pool.query(razorpay_create_order, [
